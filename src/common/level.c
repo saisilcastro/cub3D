@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   level.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mister-coder <mister-coder@student.42.f    +#+  +:+       +#+        */
+/*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 03:55:35 by mister-code       #+#    #+#             */
-/*   Updated: 2023/12/27 20:24:11 by mister-code      ###   ########.fr       */
+/*   Updated: 2023/12/28 12:21:43 by lde-cast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,4 +135,5 @@ t_status	level_load(t_level *set, char *file)
 	*(set->data + ++max) = 0;
 	close(fd);
 	free(buffer);
+	return (On);
 }
