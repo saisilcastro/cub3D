@@ -3,22 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   user-draw.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mister-coder <mister-coder@student.42.f    +#+  +:+       +#+        */
+/*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/26 17:04:15 by mister-code       #+#    #+#             */
-/*   Updated: 2023/12/27 22:07:07 by mister-code      ###   ########.fr       */
+/*   Created: 2024/02/27 16:52:30 by lde-cast          #+#    #+#             */
+/*   Updated: 2024/02/27 18:00:26 by lde-cast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <cub3D.h>
+#include <cub3d.h>
 
-void	user_draw(t_cub *set)
+void	user_draw(t_cub3d *set)
 {
-	t_vf2d	begin;
-	t_vf2d	end;
-
-	begin = set->gear->object->pos[0];
-	end = object_angle_end(set->gear->object, begin, (t_vf2d){10, 10});
-	ray_cast(set->gear->object, set->gear->image, set->gear->size[0], set->area->data);
-	mlx_draw_line(set->gear->image, begin, end, 0xFFFF0000);
 }

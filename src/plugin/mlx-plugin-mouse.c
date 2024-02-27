@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   mlx-plugin-mouse.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mister-coder <mister-coder@student.42.f    +#+  +:+       +#+        */
+/*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/24 14:20:48 by mister-code       #+#    #+#             */
-/*   Updated: 2023/12/27 04:33:09 by mister-code      ###   ########.fr       */
+/*   Updated: 2024/02/27 17:36:50 by lde-cast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <machine.h>
+#include <cub3d.h>
 
 void	mlx_scroll_get(double xdelta, double ydelta, void *param)
 {

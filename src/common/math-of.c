@@ -3,22 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   math-of.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mister-coder <mister-coder@student.42.f    +#+  +:+       +#+        */
+/*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/17 02:48:44 by mister-code       #+#    #+#             */
-/*   Updated: 2023/12/26 15:51:34 by mister-code      ###   ########.fr       */
+/*   Created: 2024/02/27 15:37:16 by lde-cast          #+#    #+#             */
+/*   Updated: 2024/02/27 16:10:54 by lde-cast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <math_of.h>
-#include <math.h>
+#include <cub3d.h>
 
-t_vi2d	vi2d_local(int x, int y)
+float	degree_to_rad(float angle)
 {
-	return ((t_vi2d){.x = x, .y = y});
+	return (angle * M_PI / 180.0);
 }
 
-t_vf2d	vf2d_local(float x, float y)
+t_vi2d	vi2d_start(int x, int y)
 {
-	return ((t_vf2d){.x = x, .y = y});
+	return ((t_vi2d){x, y});
+}
+
+t_vf2d	vf2d_start(float x, float y)
+{
+	return ((t_vf2d){x, y});
 }

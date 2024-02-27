@@ -3,50 +3,54 @@
 /*                                                        :::      ::::::::   */
 /*   machine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mister-coder <mister-coder@student.42.f    +#+  +:+       +#+        */
+/*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/17 02:47:08 by mister-code       #+#    #+#             */
-/*   Updated: 2023/12/26 16:47:57 by mister-code      ###   ########.fr       */
+/*   Created: 2024/02/27 15:13:08 by lde-cast          #+#    #+#             */
+/*   Updated: 2024/02/27 17:50:31 by lde-cast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <machine.h>
+#include <cub3d.h>
 
-static void	machine_function(t_machine *set);
+static inline void	machine_function(t_machine *set);
 
-void	machine_set(t_machine *set, char *title, t_vf2d size, t_vf2d pos)
+void	machine_set(t_machine *set, char *title, t_vi2d pos, t_vi2d size)
 {
-	int	i;
-
+	if (!set)
+		return ;
 	set->title = title;
-	set->size[0] = size;
 	set->pos[0] = pos;
-	set->plugin = NULL;
+	set->size[0] = size;
+	set->mouse->pos[0] = vi2d_start(0, 0);
 	set->mouse->button = 0;
+	set->mouse->s_wheel->left = 0;
+	set->mouse->s_wheel->top = 0;
+	set->map[0] = object_start(0, "object", vf2d_start(0, 0), NULL);
 	set->image = NULL;
 	set->object = NULL;
-	set->map[0] = object_start(0, "map", vf2d_local(0, 0), NULL);
-	i = -1;
-	while (++i < 255)
-		set->key[i] = Off;
+	set->plugin = NULL;
 	machine_function(set);
 }
 
-static t_status	machine_start(t_machine *gear, t_status resize)
+static inline char	machine_start(t_machine *set, t_status resize)
 {
-	gear->plugin = mlx_init(gear->size->x, gear->size->y, gear->title, resize);
-	if (!gear->plugin)
-		return (Off);
-	return (On);
+	if (!set->size->x || !set->size->y)
+		return (0);
+	set->plugin = mlx_init(set->size->x, set->size->y, set->title, resize);
+	if (!set->plugin)
+		return (0);
+	return (1);
 }
 
-static void	machine_pop(t_machine *set)
+static inline void	machine_pop(t_machine *set)
 {
-	image_pop(set->plugin, &set->image);
-	object_pop(&set->object);
+	if (set->image)
+		chained_pop(&set->image, NULL);
+	if (set->object)
+		chained_pop(&set->object, NULL);
 }
 
-static void	machine_function(t_machine *set)
+static inline void	machine_function(t_machine *set)
 {
 	set->start = machine_start;
 	set->pop = machine_pop;

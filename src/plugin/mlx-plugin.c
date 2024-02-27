@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   mlx-plugin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mister-coder <mister-coder@student.42.f    +#+  +:+       +#+        */
+/*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 03:59:44 by mister-code       #+#    #+#             */
-/*   Updated: 2023/12/27 16:27:38 by mister-code      ###   ########.fr       */
+/*   Updated: 2024/02/27 17:52:09 by lde-cast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <machine.h>
+#include <cub3d.h>
 
 extern void	mlx_scroll_get(double deltax, double deltay, void *param);
 extern void	mlx_mouse_pos(double x, double y, void *param);
 extern void	mlx_mouse_press(mouse_key_t button, action_t action,
 				modifier_key_t mods, void *param);
 
-void	draw_pixel(t_image *set, int x, int y, int color)
+void	draw_pixel(t_chained *set, int x, int y, int color)
 {
 	int			offset;
 	uint8_t		*start;

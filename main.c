@@ -3,24 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mister-coder <mister-coder@student.42.f    +#+  +:+       +#+        */
+/*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/17 02:29:03 by mister-code       #+#    #+#             */
-/*   Updated: 2023/12/27 04:13:44 by mister-code      ###   ########.fr       */
+/*   Created: 2024/02/27 14:00:12 by lde-cast          #+#    #+#             */
+/*   Updated: 2024/02/27 17:28:51 by lde-cast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <cub3D.h>
-#include <math.h>
+#include <cub3d.h>
 
-int	main(int argc, char **argv)
+int	main(void)
 {
-	t_cub	cub;
+	t_cub3d	*cub;
 
-	cub_set(&cub, argv[1]);
-	cub.init = user_init;
-	cub.draw = user_draw;
-	cub.update = user_update;
-	cub.run(&cub, NULL);
+	cub = cub_get();
+	cub_set(cub, NULL);
+	cub->init = user_init;
+	cub->update = user_update;
+	cub->draw = user_draw;
+	cub->run(cub, NULL);
 	return (0);
 }

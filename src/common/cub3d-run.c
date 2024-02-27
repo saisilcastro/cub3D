@@ -1,19 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3D-run.c                                        :+:      :+:    :+:   */
+/*   cub3d-run.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mister-coder <mister-coder@student.42.f    +#+  +:+       +#+        */
+/*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 03:43:49 by mister-code       #+#    #+#             */
-/*   Updated: 2023/12/26 17:01:39 by mister-code      ###   ########.fr       */
+/*   Updated: 2024/02/27 17:55:33 by lde-cast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <cub3D.h>
-#include <mlx_plugin.h>
+#include <cub3d.h>
 
-static void	mlx_plugin_run(t_cub *set)
+static void	mlx_plugin_run(t_cub3d *set)
 {
 	if (set->update)
 		mlx_loop_hook(set->gear->plugin, set->update, set);
@@ -22,7 +21,7 @@ static void	mlx_plugin_run(t_cub *set)
 	mlx_event_start(set->gear);
 }
 
-void	cub_run(t_cub *set, void *data)
+void	cub_run(t_cub3d *set, void *data)
 {
 	if (set->init)
 		set->init(set, data);

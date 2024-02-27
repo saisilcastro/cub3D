@@ -3,42 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   user-update.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mister-coder <mister-coder@student.42.f    +#+  +:+       +#+        */
+/*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/17 12:11:45 by mister-code       #+#    #+#             */
-/*   Updated: 2023/12/27 21:53:16 by mister-code      ###   ########.fr       */
+/*   Created: 2024/02/27 16:53:05 by lde-cast          #+#    #+#             */
+/*   Updated: 2024/02/27 18:00:36 by lde-cast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <cub3D.h>
-#include <math.h>
-#include <string.h>
+#include <cub3d.h>
 
-static void	key_event(t_machine *set)
+void	user_update(void *data)
 {
-	if (mlx_is_key_down(set->plugin, MLX_KEY_LEFT))
-	{
-		set->object->angle += 5;
-		object_angle_limit(set->object, vf2d_local(10, 10));
-	}
-	if (mlx_is_key_down(set->plugin, MLX_KEY_RIGHT))
-	{
-		set->object->angle -= 5;
-		object_angle_limit(set->object, vf2d_local(10, 10));
-	}
-	if (mlx_is_key_down(set->plugin, MLX_KEY_UP))
-	{
-		set->object->pos->x += set->object->vel->x;
-		set->object->pos->y += set->object->vel->y;
-	}
-	if (mlx_is_key_down(set->plugin, MLX_KEY_DOWN))
-	{
-		set->object->pos->x -= set->object->vel->x;
-		set->object->pos->y -= set->object->vel->y;
-	}
-}
-
-void	user_update(void *set)
-{
-	key_event(((t_cub *)set)->gear);
 }

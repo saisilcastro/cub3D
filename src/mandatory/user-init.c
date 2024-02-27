@@ -3,20 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   user-init.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mister-coder <mister-coder@student.42.f    +#+  +:+       +#+        */
+/*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/17 12:14:46 by mister-code       #+#    #+#             */
-/*   Updated: 2023/12/25 22:52:10 by mister-code      ###   ########.fr       */
+/*   Created: 2024/02/27 16:51:20 by lde-cast          #+#    #+#             */
+/*   Updated: 2024/02/27 18:00:32 by lde-cast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <cub3D.h>
+#include <cub3d.h>
 
-void	user_init(t_cub *set, void *data)
+void	user_init(t_cub3d *set, void *data)
 {
-	image_next_last(&set->gear->image,
-		image_push(mlx_new_image(set->gear->plugin,
-				set->gear->size->x, set->gear->size->y)));
-	object_next_last(&set->gear->object,
-		object_push(0, "line", vf2d_local(320, 240), NULL));
 }
