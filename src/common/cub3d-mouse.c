@@ -1,17 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   user-update.c                                      :+:      :+:    :+:   */
+/*   cub3d-mouse.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mister-coder <mister-coder@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/27 16:53:05 by lde-cast          #+#    #+#             */
-/*   Updated: 2024/02/28 00:43:23 by mister-code      ###   ########.fr       */
+/*   Created: 2024/02/27 19:11:07 by mister-code       #+#    #+#             */
+/*   Updated: 2024/02/27 19:12:14 by mister-code      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3d.h>
 
-void	user_update(void *data)
+t_vi2d	*cub_mouse_pos()
 {
+	return (cub_get()->gear->mouse->pos);
 }

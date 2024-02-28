@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx-plugin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mister-coder <mister-coder@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 03:59:44 by mister-code       #+#    #+#             */
-/*   Updated: 2024/02/27 17:52:09 by lde-cast         ###   ########.fr       */
+/*   Updated: 2024/02/28 01:30:25 by mister-code      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,15 @@ extern void	mlx_mouse_pos(double x, double y, void *param);
 extern void	mlx_mouse_press(mouse_key_t button, action_t action,
 				modifier_key_t mods, void *param);
 
-void	draw_pixel(t_chained *set, int x, int y, int color)
+void	draw_pixel(t_image *set, int x, int y, int color)
 {
 	int			offset;
 	uint8_t		*start;
 	mlx_image_t	*img;
 
-	img = set->data;
+	if (!set)
+		return ;
+	img = set->buffer;
 	if (x < 0 || y < 0 || x >= img->width || y >= img->height)
 		return ;
 	offset = (y * img->width + x) * sizeof(uint32_t);

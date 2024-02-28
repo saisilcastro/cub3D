@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx-plugin-rect.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mister-coder <mister-coder@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/25 22:04:55 by mister-code       #+#    #+#             */
-/*   Updated: 2024/02/27 17:27:17 by lde-cast         ###   ########.fr       */
+/*   Updated: 2024/02/28 00:03:28 by mister-code      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,23 +39,25 @@ void	mlx_draw_rect(t_chained *set, t_vf2d b, t_vf2d e, int color)
 	//mlx_draw_line(set, bottom, b, color);
 }
 
-void	mlx_image_clear(t_chained *set, int color)
+void	mlx_image_clear(t_image *set, int color)
 {
 	int		i;
 	int		size;
 	int		offset;
 	uint8_t	*start;
 
+	if (!set)
+		return ;
 	i = -1;
-	size = ((mlx_image_t *)set->data)->width
-		* ((mlx_image_t *)set->data)->height;
+	size = ((mlx_image_t *)set->buffer)->width
+		* ((mlx_image_t *)set->buffer)->height;
 	while (++i < size)
 	{
-		offset = ((i / ((mlx_image_t *)set->data)->width)
-				* ((mlx_image_t *)set->data)->width
-				+ (i % ((mlx_image_t *)set->data)->width))
+		offset = ((i / ((mlx_image_t *)set->buffer)->width)
+				* ((mlx_image_t *)set->buffer)->width
+				+ (i % ((mlx_image_t *)set->buffer)->width))
 			* sizeof(uint32_t);
-		start = ((mlx_image_t *)set->data)->pixels + offset;
+		start = ((mlx_image_t *)set->buffer)->pixels + offset;
 		*(uint32_t *)start = color;
 	}
 }

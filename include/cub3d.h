@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mister-coder <mister-coder@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:03:37 by lde-cast          #+#    #+#             */
-/*   Updated: 2024/02/27 17:31:07 by lde-cast         ###   ########.fr       */
+/*   Updated: 2024/02/28 01:27:11 by mister-code      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,11 @@ enum e_mouse_status
 typedef struct s_image		t_image;
 struct s_image
 {
-	void	*data;
+	int		id;
+	void	*buffer;
 };
+
+extern t_image	*image_push(int id, void *buffer);
 
 enum e_object{
 	OBJECT_PUSH,
@@ -105,7 +108,7 @@ typedef struct s_machine	t_machine;
 struct s_machine
 {
 	t_vi2d		pos[1];
-	t_vi2d		size[1];
+	t_vf2d		size[1];
 	char		*title;
 	t_mouse		mouse[1];
 	t_status	key[255];
@@ -117,14 +120,19 @@ struct s_machine
 	void		(*pop)(t_machine *set);
 };
 
-extern void			machine_set(t_machine *set, char *t, t_vi2d p, t_vi2d s);
+extern void			machine_set(t_machine *set, char *t, t_vi2d p, t_vf2d s);
 
 typedef struct s_cub3d		t_cub3d;
 struct s_cub3d
 {
 	t_machine	gear[1];
 	void		(*init)(t_cub3d *set, void *data);
-	t_vi2d		(*mouse_pos)(t_cub3d * set);
+	t_chained	*(*image_create)(int id, t_vf2d size);
+	t_image		*(*image_search)(int id);
+	char		(*image_next_first)(t_chained *set);
+	char		(*image_next_last)(t_chained *set);
+	void		(*map_set)(int id);
+	t_vi2d		*(*mouse_pos)();
 	void		(*update)(void *set);
 	void		(*draw)(t_cub3d *set);
 	void		(*show)(void *set);
@@ -139,8 +147,8 @@ extern void			cub_pop(t_cub3d *set);
 
 // plugin function
 extern void			mlx_event_start(t_machine *set);
-extern void			draw_pixel(t_chained *img, int x, int y, int color);
-extern void			mlx_image_clear(t_chained *set, int color);
+extern void			draw_pixel(t_image *img, int x, int y, int color);
+extern void			mlx_image_clear(t_image *set, int color);
 extern void			mlx_draw_line(t_chained *set, t_vf2d b, t_vf2d e, int color);
 extern void			mlx_draw_rect(t_chained *set, t_vf2d b, t_vf2d e, int color);
 extern void			mlx_draw_fill_rect(t_chained *set, t_vf2d b, t_vf2d size, int color);

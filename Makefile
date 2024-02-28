@@ -8,9 +8,12 @@ INCLUDE = -I./include \
 		  -I./MLX42/include
 SRC_COMMON = 	chained.c \
 				math-of.c \
+				image.c \
+				image-next.c \
 				object.c \
 				machine.c \
 				cub3d-run.c \
+				cub3d-mouse.c \
 				cub3d.c
 SRC_PLUGIN =	mlx-plugin.c \
 				mlx-plugin-mouse.c \
@@ -39,5 +42,7 @@ clean:
 fclean: clean
 	$(call REMOVE, ${NAME})
 re: fclean all
+play:
+	./$(NAME)
 leak:
 	valgrind --leak-check=full -q ./$(NAME)

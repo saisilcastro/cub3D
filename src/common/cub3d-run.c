@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d-run.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mister-coder <mister-coder@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 03:43:49 by mister-code       #+#    #+#             */
-/*   Updated: 2024/02/27 17:55:33 by lde-cast         ###   ########.fr       */
+/*   Updated: 2024/02/28 01:05:16 by mister-code      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,9 @@ void	cub_run(t_cub3d *set, void *data)
 	if (set->pop)
 		set->pop(set);
 	cub_pop(set);
+}
+
+void	cub_map_set(int id)
+{
+	cub_get()->gear->map->image = cub_get()->image_search(id);
 }

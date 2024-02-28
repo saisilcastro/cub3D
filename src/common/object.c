@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   object.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mister-coder <mister-coder@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 15:44:38 by lde-cast          #+#    #+#             */
-/*   Updated: 2024/02/27 16:12:21 by lde-cast         ###   ########.fr       */
+/*   Updated: 2024/02/28 01:26:30 by mister-code      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,13 @@ t_object	*object_push(int id, char *name, t_vf2d pos, t_image *image)
 	return (set);
 }
 
-void	object_pop(void *set)
+void	object_pop(void *data)
 {
-	t_object	*remover;
+	t_object	*object;
 
-	remover = set;
-	if (remover->name)
-		free(remover->name);
-	if (remover->status & 1 << OBJECT_PUSH)
-		free(remover);
+	object = data;
+	if (object->name)
+		free(object->name);
+	if (object->status & 1 << OBJECT_PUSH)
+		free(object);
 }

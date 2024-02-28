@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   mlx-plugin-line.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mister-coder <mister-coder@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/24 14:26:36 by mister-code       #+#    #+#             */
-/*   Updated: 2024/02/26 12:40:47 by lde-cast         ###   ########.fr       */
+/*   Updated: 2024/02/28 01:17:55 by mister-code      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <machine.h>
-#include <math.h>
-#include <mlx_plugin.h>
+#include <cub3d.h>
 
 void	mlx_draw_line(t_image *set, t_vf2d b, t_vf2d e, int color)
 {
@@ -22,12 +20,12 @@ void	mlx_draw_line(t_image *set, t_vf2d b, t_vf2d e, int color)
 	int		i;
 	int		step;
 
-	dest = vf2d_local(e.x - b.x, e.y - b.y);
+	dest = vf2d_start(e.x - b.x, e.y - b.y);
 	if (fabs(dest.x) > fabs(dest.y))
 		step = (int)fabs(dest.x);
 	else
 		step = (int)fabs(dest.y);
-	inc = vf2d_local(dest.x / (float)step, (float)dest.y / step);
+	inc = vf2d_start(dest.x / (float)step, (float)dest.y / step);
 	pos = b;
 	i = -1;
 	while (++i < step)
