@@ -7,15 +7,18 @@ VPATH = src: ./src/common src: ./src/mandatory src: ./src/plugin
 INCLUDE = -I./include \
 		  -I./MLX42/include
 SRC_COMMON = 	chained.c \
+				angle.c \
 				math-of.c \
 				image.c \
 				image-next.c \
 				object.c \
+				object-next.c \
 				machine.c \
 				cub3d-run.c \
 				cub3d-mouse.c \
 				cub3d.c
 SRC_PLUGIN =	mlx-plugin.c \
+				mlx-plugin-line.c \
 				mlx-plugin-mouse.c \
 				mlx-plugin-rect.c \
 				mlx-ray-cast.c

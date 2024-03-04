@@ -3,16 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d-mouse.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mister-coder <mister-coder@student.42.f    +#+  +:+       +#+        */
+/*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 19:11:07 by mister-code       #+#    #+#             */
-/*   Updated: 2024/02/27 19:12:14 by mister-code      ###   ########.fr       */
+/*   Updated: 2024/02/28 14:25:41 by lde-cast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3d.h>
 
-t_vi2d	*cub_mouse_pos()
+t_vi2d	*cub_mouse_pos(void)
 {
 	return (cub_get()->gear->mouse->pos);
+}
+
+char	cub_mouse_press(t_mouse_status button)
+{
+	return (cub_get()->gear->mouse->button & (1 << button));
 }

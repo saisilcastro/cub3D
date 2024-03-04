@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mister-coder <mister-coder@student.42.f    +#+  +:+       +#+        */
+/*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:03:37 by lde-cast          #+#    #+#             */
-/*   Updated: 2024/02/28 01:27:11 by mister-code      ###   ########.fr       */
+/*   Updated: 2024/02/28 18:49:10 by lde-cast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,12 @@ struct s_vf2d
 
 extern t_vf2d		vf2d_start(float x, float y);
 
-enum e_mouse_status
+typedef enum e_mouse_status
 {
 	MOUSE_LEFT,
 	MOUSE_MIDDLE,
 	MOUSE_RIGHT
-};
+}t_mouse_status;
 
 typedef struct s_image		t_image;
 struct s_image
@@ -70,7 +70,7 @@ struct s_image
 	void	*buffer;
 };
 
-extern t_image	*image_push(int id, void *buffer);
+extern t_image		*image_push(int id, void *buffer);
 
 enum e_object{
 	OBJECT_PUSH,
@@ -127,12 +127,17 @@ struct s_cub3d
 {
 	t_machine	gear[1];
 	void		(*init)(t_cub3d *set, void *data);
+	t_vi2d		*(*mouse_pos)();
+	char		(*mouse_press)(t_mouse_status button);
 	t_chained	*(*image_create)(int id, t_vf2d size);
 	t_image		*(*image_search)(int id);
 	char		(*image_next_first)(t_chained *set);
 	char		(*image_next_last)(t_chained *set);
 	void		(*map_set)(int id);
-	t_vi2d		*(*mouse_pos)();
+	t_chained	*(*object_push)(int id, char *name, t_vf2d pos, t_image *img);
+	t_object	*(*object_search)(int id);
+	char		(*object_next_first)(t_chained *set);
+	char		(*object_next_last)(t_chained *set);
 	void		(*update)(void *set);
 	void		(*draw)(t_cub3d *set);
 	void		(*show)(void *set);
@@ -145,15 +150,18 @@ extern void			cub_set(t_cub3d *set, char *level);
 extern void			cub_run(t_cub3d *set, void *data);
 extern void			cub_pop(t_cub3d *set);
 
+// angle function
+extern t_vf2d		line_angle_end(t_vf2d begin, t_vf2d vel);
+extern t_vf2d		line_angle_get(float *angle, t_vf2d size);
 // plugin function
 extern void			mlx_event_start(t_machine *set);
 extern void			draw_pixel(t_image *img, int x, int y, int color);
-extern void			mlx_image_clear(t_image *set, int color);
-extern void			mlx_draw_line(t_chained *set, t_vf2d b, t_vf2d e, int color);
-extern void			mlx_draw_rect(t_chained *set, t_vf2d b, t_vf2d e, int color);
-extern void			mlx_draw_fill_rect(t_chained *set, t_vf2d b, t_vf2d size, int color);
+extern void			mlx_image_clear(t_image *s, int color);
+extern void			mlx_draw_line(t_image *s, t_vf2d b, t_vf2d e, int color);
+extern void			mlx_draw_rect(t_image *s, t_vf2d b, t_vf2d e, int color);
+extern void			mlx_draw_fill_rect(t_image *s, t_vf2d b, t_vf2d sz, int c);
 
-extern void			ray_cast(t_object *obj, t_chained *img, t_vf2d size, char *map);
+extern void			ray_cast(t_object *o, t_image *i, t_vf2d s, char *m);
 
 // user function
 extern void			user_init(t_cub3d *set, void *data);

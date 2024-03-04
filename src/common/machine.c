@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   machine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mister-coder <mister-coder@student.42.f    +#+  +:+       +#+        */
+/*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 15:13:08 by lde-cast          #+#    #+#             */
-/*   Updated: 2024/02/28 01:27:45 by mister-code      ###   ########.fr       */
+/*   Updated: 2024/02/28 16:12:29 by lde-cast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3d.h>
 
+extern void		image_pop(void *data);
 static inline void	machine_function(t_machine *set);
-extern void	image_pop(void *data);
 
 void	machine_set(t_machine *set, char *title, t_vi2d pos, t_vf2d size)
 {
