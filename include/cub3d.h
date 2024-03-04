@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mister-coder <mister-coder@student.42.f    +#+  +:+       +#+        */
+/*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:03:37 by lde-cast          #+#    #+#             */
-/*   Updated: 2024/03/03 16:10:21 by mister-code      ###   ########.fr       */
+/*   Updated: 2024/03/04 12:18:33 by lde-cast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define CUB3D_H
 
 # include <MLX42/MLX42.h>
+# include <unistd.h>
 # include <math.h>
 # include <stdio.h>
 # include <string.h>
@@ -70,20 +71,21 @@ struct s_image
 	void	*buffer;
 };
 
-extern t_image	*image_push(int id, void *buffer);
+extern t_image		*image_push(int id, void *buffer);
 
 enum e_object{
 	OBJECT_PUSH,
 	OBJECT_VISIBLE
 };
 
-typedef struct{
+typedef struct
+{
 	char	*path[4];
 	int		color[2];
 	char	**buffer;
 }t_map;
 
-extern t_status	map_load(t_map *set, char *path);
+extern t_status		map_load(t_map *set, char *path);
 
 typedef struct s_object		t_object;
 struct s_object

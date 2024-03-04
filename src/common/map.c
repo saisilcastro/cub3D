@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mister-coder <mister-coder@student.42.f    +#+  +:+       +#+        */
+/*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 16:10:43 by mister-code       #+#    #+#             */
-/*   Updated: 2024/03/03 17:28:16 by mister-code      ###   ########.fr       */
+/*   Updated: 2024/03/04 12:19:09 by lde-cast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3d.h>
-
-
 
 t_status	map_load(t_map *set, char *path)
 {
@@ -22,4 +20,5 @@ t_status	map_load(t_map *set, char *path)
 		return (Off);
 	fd = open(path);
 	close(fd);
+	return (On);
 }
