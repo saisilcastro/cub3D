@@ -6,7 +6,7 @@
 /*   By: mister-coder <mister-coder@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:03:37 by lde-cast          #+#    #+#             */
-/*   Updated: 2024/02/29 12:16:41 by mister-code      ###   ########.fr       */
+/*   Updated: 2024/03/03 16:10:21 by mister-code      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,14 @@ enum e_object{
 	OBJECT_VISIBLE
 };
 
+typedef struct{
+	char	*path[4];
+	int		color[2];
+	char	**buffer;
+}t_map;
+
+extern t_status	map_load(t_map *set, char *path);
+
 typedef struct s_object		t_object;
 struct s_object
 {
@@ -128,6 +136,7 @@ extern void			machine_set(t_machine *set, char *t, t_vi2d p, t_vf2d s);
 typedef struct s_cub3d		t_cub3d;
 struct s_cub3d
 {
+	t_map		area[1];
 	t_machine	gear[1];
 	void		(*init)(t_cub3d *set, void *data);
 	t_vi2d		*(*mouse_pos)(void);

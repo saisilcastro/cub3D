@@ -8,6 +8,7 @@ INCLUDE = -I./include \
 		  -I./MLX42/include
 SRC_COMMON = 	chained.c \
 				angle.c \
+				map.c \
 				math-of.c \
 				image.c \
 				image-next.c \

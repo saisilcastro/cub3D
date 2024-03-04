@@ -6,7 +6,7 @@
 /*   By: mister-coder <mister-coder@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:01:46 by lde-cast          #+#    #+#             */
-/*   Updated: 2024/02/29 00:02:33 by mister-code      ###   ########.fr       */
+/*   Updated: 2024/03/03 16:09:29 by mister-code      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ t_cub3d	*cub_get(void)
 
 void	cub_set(t_cub3d *set, char *level)
 {
-	//level_load(set->area, level);
+	if (!map_load(set->area, level))
+		return ;
 	machine_set(set->gear, "cub3D by Luiza and Lisias", vi2d_start(0, 0), vf2d_start(640, 480));
 	if (!set->gear->start(set->gear, Off))
 		return ;
