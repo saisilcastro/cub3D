@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lumedeir < lumedeir@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:03:37 by lde-cast          #+#    #+#             */
-/*   Updated: 2024/02/28 18:49:10 by lde-cast         ###   ########.fr       */
+/*   Updated: 2024/03/04 17:31:34 by lumedeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,23 @@ typedef enum e_status{
 	Off,
 	On
 }t_status;
+
+typedef struct s_pixel{
+	unsigned char	r;
+	unsigned char	g;
+	unsigned char	b;
+	unsigned char	a;
+}	t_pixel;
+
+typedef struct s_map{
+	char	**map;
+	char	*textures[4];
+	t_pixel	color[2];
+	int		map_height;
+	int		map_width;
+}	t_map;
+
+int	check_input(int argc, char **argv, t_map *map);
 
 typedef struct s_chained	t_chained;
 struct s_chained{
