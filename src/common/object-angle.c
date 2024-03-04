@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d-mouse.c                                      :+:      :+:    :+:   */
+/*   object-angle.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mister-coder <mister-coder@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/27 19:11:07 by mister-code       #+#    #+#             */
-/*   Updated: 2024/02/28 23:53:54 by mister-code      ###   ########.fr       */
+/*   Created: 2023/12/25 23:45:34 by mister-code       #+#    #+#             */
+/*   Updated: 2024/02/29 07:09:32 by mister-code      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3d.h>
 
-t_vi2d	*cub_mouse_pos()
+void	object_angle_limit(t_object *set, t_vf2d size)
 {
-	return (cub_get()->gear->mouse->pos);
+	set->vel[0] = line_angle_get(&set->angle, size);
 }
 
-char	cub_mouse_press(t_mouse_status button)
+t_vf2d	object_angle_end(t_object *obj, t_vf2d begin, t_vf2d size)
 {
-	return (cub_get()->gear->mouse->button & (1 << button));
+	t_vf2d	end;
+
+	end.x = begin.x + obj->vel->x * size.x;
+	end.y = begin.y + obj->vel->y * size.y;
+	return (end);
 }

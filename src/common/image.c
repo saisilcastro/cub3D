@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   image.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mister-coder <mister-coder@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 19:25:14 by mister-code       #+#    #+#             */
-/*   Updated: 2024/02/28 16:10:33 by lde-cast         ###   ########.fr       */
+/*   Updated: 2024/02/28 01:25:52 by mister-code      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3d.h>
 
-t_image	*image_push(int id, void *buffer)
+t_image *image_push(int id, void *buffer)
 {
 	t_image	*set;
 
@@ -24,27 +24,20 @@ t_image	*image_push(int id, void *buffer)
 	return (set);
 }
 
-t_chained	*image_create(int id, t_vf2d size)
+t_chained   *image_create(int id, t_vf2d size)
 {
 	t_image	*image;
-	void	*plugin;
 	t_vi2d	area;
 
 	area = vi2d_start(size.x, size.y);
-	plugin = cub_get()->gear->plugin;
-	image = image_push(id, mlx_new_image(plugin, area.x, area.y));
+	image = image_push(id, mlx_new_image(cub_get()->gear->plugin, area.x, area.y));
 	return (chained_push(image));
-}
-
-t_chained	*image_load(int id, char *path)
-{
-	return (NULL);
 }
 
 t_image	*image_search(int id)
 {
-	t_image		*image;
 	t_chained	*update;
+	t_image		*image;
 
 	update = cub_get()->gear->image;
 	while (update)

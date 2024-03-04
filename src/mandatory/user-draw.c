@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   user-draw.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mister-coder <mister-coder@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 16:52:30 by lde-cast          #+#    #+#             */
-/*   Updated: 2024/02/28 20:13:21 by lde-cast         ###   ########.fr       */
+/*   Updated: 2024/02/29 12:17:59 by mister-code      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ void	user_draw(t_cub3d *set)
 	t_vf2d	begin;
 	t_vf2d	end;
 
-	begin = set->object_search(0)->pos[0];
-	//end = object_angle_end(set->object_search(0), begin, (t_vf2d){10, 10});
-	ray_cast(set->gear->object, set->gear->image, set->gear->size[0], set->area->data);
-	//mlx_draw_line(set->gear->image, begin, end, 0xFFFF0000);
+	begin = *(set->object_search(0)->pos);
+	*(set->object_search(0)->size) = end = vf2d_start(20, 20);
+	mlx_draw_fill_rect(set->gear->map->image, begin, end, 0xFF0000FF);
+	ray_cast(set->object_search(0), set->gear->map->image, *(set->gear->size), "");
 }

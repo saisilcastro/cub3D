@@ -8,11 +8,13 @@ INCLUDE = -I./include \
 		  -I./MLX42/include
 SRC_COMMON = 	chained.c \
 				angle.c \
+				map.c \
 				math-of.c \
 				image.c \
 				image-next.c \
 				object.c \
 				object-next.c \
+				object-angle.c \
 				machine.c \
 				cub3d-run.c \
 				cub3d-mouse.c \
