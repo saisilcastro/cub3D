@@ -6,9 +6,11 @@
 /*   By: lumedeir < lumedeir@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 17:31:05 by lumedeir          #+#    #+#             */
-/*   Updated: 2024/03/05 14:09:53 by lumedeir         ###   ########.fr       */
+/*   Updated: 2024/03/05 14:16:27 by lumedeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "../includes/cub3d.h"
 
 #include "../includes/cub3d.h"
 
@@ -40,7 +42,6 @@ static void	get_map_size(t_map *map, char **arr, int i)
 static char	*texture_breaker(char *texture, char *direction)
 {
 	texture = ft_strtrim(ft_strtrim(texture, direction), " ");
-	printf("%s\n", texture);
 	return (ft_strdup(texture));
 }
 
@@ -88,12 +89,6 @@ static inline t_status	checker(t_map **map, char **texture)
 
 static t_status	parameters_validate(t_map *map)
 {
-	printf("no :%s\n", map->textures[0]);
-	printf("ea: %s\n", map->textures[1]);
-	printf("so: %s\n", map->textures[2]);
-	printf("we: %s\n", map->textures[3]);
-	printf("f: %i\n", map->color[0].g);
-	printf("c: %i\n", map->color[1].g);
 	if (map->textures[0] == NULL || map->textures[1] == NULL
 		|| map->textures[2] == NULL || map->textures[3] == NULL
 		|| map->color[0].a == 0 || map->color[1].a == 0)
@@ -139,6 +134,6 @@ int	check_input(int argc, char **argv, t_map *map)
 	if (ft_strncmp(".cub", &argv[1][len], 4) != 0)
 		return (printf("Invalid map file extension"), 0);
 	if (!check_map(argv[1], map))
-		return (0);
-	return (1);
+		return (1);
+	return (0);
 }
