@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mister-coder <mister-coder@student.42.f    +#+  +:+       +#+        */
+/*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:01:46 by lde-cast          #+#    #+#             */
-/*   Updated: 2024/03/03 16:09:29 by mister-code      ###   ########.fr       */
+/*   Updated: 2024/03/05 17:40:13 by lde-cast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ t_cub3d	*cub_get(void)
 
 void	cub_set(t_cub3d *set, char *level)
 {
-	if (!map_load(set->area, level))
-		return ;
 	machine_set(set->gear, "cub3D by Luiza and Lisias", vi2d_start(0, 0), vf2d_start(640, 480));
 	if (!set->gear->start(set->gear, Off))
 		return ;
@@ -44,6 +42,18 @@ void	cub_set(t_cub3d *set, char *level)
 
 void	cub_pop(t_cub3d *set)
 {
+	int		i;
+
+	i = -1;
+	while (++i < 4 && set->level->textures[i])
+		free(set->level->textures[i]);
+	if (set->level->map)
+	{
+		i = -1;
+		while (*(set->level->map + ++i))
+			free(*(set->level->map + i));
+		free(set->level->map);
+	}
 	set->gear->pop(set->gear);
 	mlx_terminate(set->gear->plugin);
 }

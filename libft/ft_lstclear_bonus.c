@@ -1,20 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   user-init.c                                        :+:      :+:    :+:   */
+/*   ft_lstclear_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/27 16:51:20 by lde-cast          #+#    #+#             */
-/*   Updated: 2024/03/05 15:17:17 by lde-cast         ###   ########.fr       */
+/*   Created: 2023/04/30 18:36:57 by lde-cast          #+#    #+#             */
+/*   Updated: 2023/05/01 18:23:11 by lde-cast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <cub3d.h>
+#include "libft.h"
 
-void	user_init(t_cub3d *set, void *data)
+void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
-	set->image_next_last(set->image_create(0, set->gear->size[0]));
-	set->map_set(0);
-	set->object_next_last(set->object_push(0, "hero", vf2d_start(320, 240), NULL));
+	t_list	*update;
+	t_list	*last;
+
+	last = *lst;
+	while (last)
+	{
+		update = last->next;
+		del(last->content);
+		free(last);
+		last = update;
+	}
+	*lst = last;
 }

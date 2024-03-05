@@ -1,14 +1,14 @@
 ifneq ($(OS), Windows_NT)
 	NAME = cub3D
-	CREATE = mkdir -p $(1)
-	REMOVE = rm -rf $(1)
+	CREATE = @mkdir -p $(1)
+	REMOVE = @rm -rf $(1)
 endif
 VPATH = src: ./src/common src: ./src/mandatory src: ./src/plugin
 INCLUDE = -I./include \
-		  -I./MLX42/include
+		  -I./MLX42/include \
+		  -I./libft
 SRC_COMMON = 	chained.c \
 				angle.c \
-				map.c \
 				math-of.c \
 				image.c \
 				image-next.c \
@@ -24,7 +24,8 @@ SRC_PLUGIN =	mlx-plugin.c \
 				mlx-plugin-mouse.c \
 				mlx-plugin-rect.c \
 				mlx-ray-cast.c
-SRC_MANDATORY = user-init.c \
+SRC_MANDATORY = check-map.c \
+				user-init.c \
 				user-update.c \
 				user-draw.c
 SRC =	$(SRC_COMMON) \
@@ -33,21 +34,25 @@ SRC =	$(SRC_COMMON) \
 		main.c
 OBJ = obj
 SRCOBJ = $(SRC:%.c=${OBJ}/%.o)
-LIB = -L./MLX42/build
-FLAG = -lmlx42 -ldl -lglfw -pthread -lm
+LIB = -L./MLX42/build \
+	  -L./libft
+FLAG = -lmlx42 -ldl -lglfw -pthread -lm -lft
 
 all: $(NAME)
 $(NAME): $(SRCOBJ)
+	@$(MAKE) -C ./libft --silent
 	$(CC) $^ $(LIB) $(FLAG) -o $(NAME)
 ${OBJ}/%.o : %.c
 	$(call CREATE,${OBJ})
 	$(CC) -c $< -o $@ $(INCLUDE)
 clean:
 	$(call REMOVE,${OBJ})
+	$(call REMOVE,./libft/*.o)
 fclean: clean
-	$(call REMOVE, ${NAME})
+	$(call REMOVE,${NAME})
+	$(call REMOVE,./libft/libft.a)
 re: fclean all
 play:
 	./$(NAME)
 leak:
-	valgrind --leak-check=full -q ./$(NAME)
+	valgrind --leak-check=full -q ./$(NAME) minimalist.cub

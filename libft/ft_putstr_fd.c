@@ -1,20 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   user-init.c                                        :+:      :+:    :+:   */
+/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/27 16:51:20 by lde-cast          #+#    #+#             */
-/*   Updated: 2024/03/05 15:17:17 by lde-cast         ###   ########.fr       */
+/*   Created: 2023/04/24 17:19:33 by lde-cast          #+#    #+#             */
+/*   Updated: 2023/04/29 15:13:44 by lde-cast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <cub3d.h>
+#include "libft.h"
 
-void	user_init(t_cub3d *set, void *data)
+void	ft_putstr_fd(char const *s, int fd)
 {
-	set->image_next_last(set->image_create(0, set->gear->size[0]));
-	set->map_set(0);
-	set->object_next_last(set->object_push(0, "hero", vf2d_start(320, 240), NULL));
+	char	symbol;
+
+	while (*s)
+	{
+		symbol = *s;
+		write(fd, &symbol, 1);
+		s++;
+	}		
 }

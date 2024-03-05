@@ -1,32 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/27 14:00:12 by lde-cast          #+#    #+#             */
-/*   Updated: 2024/03/05 17:45:19 by lde-cast         ###   ########.fr       */
+/*   Created: 2023/04/24 16:48:08 by lde-cast          #+#    #+#             */
+/*   Updated: 2023/04/30 21:38:51 by lde-cast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <cub3d.h>
+#include "libft.h"
+#include <stdio.h>
 
-int	main(int argc, char **argv)
+char	*ft_strnstr(const char *big, const char *little, size_t n)
 {
-	if (check_input(argc, argv))
+	const char	*b;
+	const char	*l;
+	size_t		i;
+
+	if (!*little)
+		return ((char *)big);
+	while (*big && n > 0)
 	{
-		char	**map;
-		map = cub_get()->level->map;
-		while (*map)
+		if (*big == *little)
 		{
-			printf("%s\n", *map);
-			map++;
+			b = big;
+			l = little;
+			i = n;
+			while (*b && *l && *b == *l && i-- > 0)
+			{
+				b++;
+				l++;
+			}
+			if (!*l)
+				return ((char *)big);
 		}
-		//cub_get()->init = user_init;
-		//cub_get()->update = user_update;
-		//cub_get()->draw = user_draw;
-		cub_get()->run(cub_get(), NULL);
+		big++;
+		n--;
 	}
-	return (0);
+	return (NULL);
 }

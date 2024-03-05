@@ -1,24 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map.c                                              :+:      :+:    :+:   */
+/*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/03 16:10:43 by mister-code       #+#    #+#             */
-/*   Updated: 2024/03/04 12:19:09 by lde-cast         ###   ########.fr       */
+/*   Created: 2023/04/24 16:58:59 by lde-cast          #+#    #+#             */
+/*   Updated: 2023/04/29 15:14:51 by lde-cast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <cub3d.h>
+#include "libft.h"
 
-t_status	map_load(t_map *set, char *path)
+int	ft_isalnum(int arg)
 {
-	int	fd;
-
-	if (!set)
-		return (Off);
-	fd = open(path);
-	close(fd);
-	return (On);
+	if ((arg > 64 && arg < 91)
+		|| (arg > 96 && arg < 123)
+		|| (arg > 47 && arg < 58))
+		return (8);
+	return (0);
 }

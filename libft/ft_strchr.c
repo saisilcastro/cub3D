@@ -1,20 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   user-init.c                                        :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/27 16:51:20 by lde-cast          #+#    #+#             */
-/*   Updated: 2024/03/05 15:17:17 by lde-cast         ###   ########.fr       */
+/*   Created: 2023/04/24 16:41:40 by lde-cast          #+#    #+#             */
+/*   Updated: 2023/04/30 21:16:20 by lde-cast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <cub3d.h>
+#include "libft.h"
 
-void	user_init(t_cub3d *set, void *data)
+char	*ft_strchr(const char *str, int c)
 {
-	set->image_next_last(set->image_create(0, set->gear->size[0]));
-	set->map_set(0);
-	set->object_next_last(set->object_push(0, "hero", vf2d_start(320, 240), NULL));
+	while (*str)
+	{
+		if (*str == (char)c)
+			return ((char *)str);
+		str++;
+	}
+	if (!c)
+		return ((char *)str);
+	return (NULL);
 }

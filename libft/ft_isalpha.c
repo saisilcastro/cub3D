@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   user-init.c                                        :+:      :+:    :+:   */
+/*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/27 16:51:20 by lde-cast          #+#    #+#             */
-/*   Updated: 2024/03/05 15:17:17 by lde-cast         ###   ########.fr       */
+/*   Created: 2023/04/24 16:55:15 by lde-cast          #+#    #+#             */
+/*   Updated: 2023/04/29 15:54:02 by lde-cast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <cub3d.h>
+#include "libft.h"
 
-void	user_init(t_cub3d *set, void *data)
+int	ft_isalpha(int arg)
 {
-	set->image_next_last(set->image_create(0, set->gear->size[0]));
-	set->map_set(0);
-	set->object_next_last(set->object_push(0, "hero", vf2d_start(320, 240), NULL));
+	if ((arg > 64 && arg < 91) || (arg > 96 && arg < 123))
+		return (1024);
+	return (0);
 }

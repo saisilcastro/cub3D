@@ -1,20 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   user-init.c                                        :+:      :+:    :+:   */
+/*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/27 16:51:20 by lde-cast          #+#    #+#             */
-/*   Updated: 2024/03/05 15:17:17 by lde-cast         ###   ########.fr       */
+/*   Created: 2023/04/24 16:34:28 by lde-cast          #+#    #+#             */
+/*   Updated: 2023/04/30 14:56:00 by lde-cast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <cub3d.h>
+#include "libft.h"
 
-void	user_init(t_cub3d *set, void *data)
+int	ft_memcmp(const void *m1, const void *m2, size_t n)
 {
-	set->image_next_last(set->image_create(0, set->gear->size[0]));
-	set->map_set(0);
-	set->object_next_last(set->object_push(0, "hero", vf2d_start(320, 240), NULL));
+	const unsigned char	*s1;
+	const unsigned char	*s2;	
+
+	s1 = m1;
+	s2 = m2;
+	while (n--)
+	{
+		if (*s1 < *s2)
+			return (-1);
+		else if (*s1 > *s2)
+			return (1);
+		s1++;
+		s2++;
+	}
+	return (0);
 }

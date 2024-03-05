@@ -1,20 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   user-init.c                                        :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/27 16:51:20 by lde-cast          #+#    #+#             */
-/*   Updated: 2024/03/05 15:17:17 by lde-cast         ###   ########.fr       */
+/*   Created: 2023/04/29 16:33:22 by lde-cast          #+#    #+#             */
+/*   Updated: 2023/05/12 11:31:11 by lde-cast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <cub3d.h>
+#include "libft.h"
 
-void	user_init(t_cub3d *set, void *data)
+void	*ft_calloc(size_t len, size_t size)
 {
-	set->image_next_last(set->image_create(0, set->gear->size[0]));
-	set->map_set(0);
-	set->object_next_last(set->object_push(0, "hero", vf2d_start(320, 240), NULL));
+	unsigned char	*ptr;
+	size_t			i;
+	size_t			j;
+
+	i = len * size;
+	if (i != 0 && i / size != len)
+		return (NULL);
+	ptr = (unsigned char *)malloc(i);
+	if (!ptr)
+		return (NULL);
+	j = 0;
+	while (j < i)
+	{
+		*(ptr + j) = '\0';
+		j++;
+	}
+	return ((void *)ptr);
 }

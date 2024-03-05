@@ -1,20 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   user-init.c                                        :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/27 16:51:20 by lde-cast          #+#    #+#             */
-/*   Updated: 2024/03/05 15:17:17 by lde-cast         ###   ########.fr       */
+/*   Created: 2023/04/24 16:34:04 by lde-cast          #+#    #+#             */
+/*   Updated: 2023/04/30 15:06:20 by lde-cast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <cub3d.h>
+#include "libft.h"
 
-void	user_init(t_cub3d *set, void *data)
+void	*ft_memmove(void *dest, const void *src, size_t n)
 {
-	set->image_next_last(set->image_create(0, set->gear->size[0]));
-	set->map_set(0);
-	set->object_next_last(set->object_push(0, "hero", vf2d_start(320, 240), NULL));
+	unsigned char		*c_dest;
+	unsigned const char	*c_src;
+	size_t				i;
+
+	c_dest = dest;
+	c_src = src;
+	if (c_dest <= c_src)
+	{
+		i = 0;
+		while (i < n)
+		{
+			*(c_dest + i) = *(c_src + i);
+			i++;
+		}
+		return (dest);
+	}
+	i = n;
+	while (i > 0)
+	{
+		*(c_dest + i - 1) = *(c_src + i - 1);
+		i--;
+	}
+	return (dest);
 }
