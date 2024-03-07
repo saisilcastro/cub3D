@@ -6,7 +6,7 @@
 /*   By: lumedeir < lumedeir@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 15:13:12 by lumedeir          #+#    #+#             */
-/*   Updated: 2024/03/07 16:20:37 by lumedeir         ###   ########.fr       */
+/*   Updated: 2024/03/07 16:38:18 by lumedeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,15 +100,18 @@ static t_status	character_validade(char **map)
 	int	i;
 	int	j;
 
-	i = -1;
+	i = 0;
 	j = 0;
-	while (map[j][i--])
+	while (map[j])
 	{
-		while (map[j][++i])
+		while (map[j][i])
+		{
 			if (map[j][i] != '0' && map[j][i] != '1'
 				&& map[j][i] != 'N' && map[j][i] != 'S'
 					&& map[j][i] != 'E' && map[j][i] != 'W' && map[j][i] != ' ')
 				return (printf("Invalid character\n"), Off);
+			i++;
+		}
 		i = 0;
 		j++;
 	}
