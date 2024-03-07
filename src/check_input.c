@@ -6,27 +6,11 @@
 /*   By: lumedeir < lumedeir@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 15:13:12 by lumedeir          #+#    #+#             */
-/*   Updated: 2024/03/07 16:38:18 by lumedeir         ###   ########.fr       */
+/*   Updated: 2024/03/07 17:32:51 by lumedeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
-
-static void	get_map_size(t_map *map, char **arr, int i)
-{
-	int		j;
-
-	j = i;
-	map->map_width = ft_strlen(arr[i]);
-	while (arr[++i])
-	{
-		arr[i] = ft_strtrim(arr[i], "\n");
-		if (ft_strlen(arr[i]) > map->map_width)
-			map->map_width = ft_strlen(arr[i]);
-	}
-	map->map_height = i - j;
-	map->map = &arr[j];
-}
 
 static char	*texture_breaker(char *texture, char *direction)
 {
@@ -59,7 +43,7 @@ static t_pixel	get_color(char *line)
 	return (color);
 }
 
-static inline t_status	checker(t_map **map, char **texture)
+t_status	checker(t_map **map, char **texture)
 {
 	*texture = ft_strtrim(*texture, " ");
 	if (!ft_strncmp(*texture, "NO ", 3) || !ft_strncmp(*texture, "EA ", 3)
@@ -86,62 +70,19 @@ static inline t_status	checker(t_map **map, char **texture)
 	return (Off);
 }
 
-static t_status	parameters_validate(t_map *map)
+t_status	parameters_validate(t_map *map)
 {
+	int	i;
+
 	if (map->textures[0] == NULL || map->textures[1] == NULL
 		|| map->textures[2] == NULL || map->textures[3] == NULL
 		|| map->color[0].a == 0 || map->color[1].a == 0)
-		return (Off);
-	return (On);
-}
-
-static t_status	character_validade(char **map)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (map[j])
-	{
-		while (map[j][i])
-		{
-			if (map[j][i] != '0' && map[j][i] != '1'
-				&& map[j][i] != 'N' && map[j][i] != 'S'
-					&& map[j][i] != 'E' && map[j][i] != 'W' && map[j][i] != ' ')
-				return (printf("Invalid character\n"), Off);
-			i++;
-		}
-		i = 0;
-		j++;
-	}
-	return (On);
-}
-
-static t_status	check_map(char *map_fd, t_map *map)
-{
-	int		fd;
-	int		i;
-	char	buffer[65535];
-	char	**arr;
-
-	fd = open(map_fd, O_RDONLY);
-	if (fd == -1)
-		return ((printf("Invalid path\n")), Off);
-	i = read(fd, buffer, 65535);
-	close(fd);
-	buffer[i] = '\0';
+		return (printf("Invalid parameters\n"), Off);
 	i = -1;
-	arr = ft_split(buffer, '\n');
-	if (arr[0] && *arr[0] && *arr[0] == '\n')
-		return (printf("Empty map\n"), Off);
-	while (arr[++i] && *arr[i] && On)
-		if (!checker(&map, &arr[i]))
-			break ;
-	if (!parameters_validate(map))
-		return (printf("Invalid parameters\n"), 0);
-	get_map_size(map, arr, i);
-	character_validade(map->map);
+	while (++i < 4)
+		if (ft_strncmp(".png", map->textures[i]
+				+ (ft_strlen(map->textures[i]) - 4), 4) != 0)
+			return (printf("Invalid texture extension\n"), Off);
 	return (On);
 }
 

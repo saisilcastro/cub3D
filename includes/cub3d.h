@@ -6,7 +6,7 @@
 /*   By: lumedeir < lumedeir@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 15:00:59 by lumedeir          #+#    #+#             */
-/*   Updated: 2024/03/05 13:59:50 by lumedeir         ###   ########.fr       */
+/*   Updated: 2024/03/07 16:50:53 by lumedeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,9 @@ typedef struct s_map{
 	int		map_width;
 }	t_map;
 
-int	check_input(int argc, char **argv, t_map *map);
+int			check_input(int argc, char **argv, t_map *map);
+t_status	checker(t_map **map, char **texture);
+t_status	parameters_validate(t_map *map);
+t_status	check_map(char *map_fd, t_map *map);
 
 #endif

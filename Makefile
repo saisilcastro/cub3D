@@ -6,7 +6,7 @@
 #    By: lumedeir < lumedeir@student.42sp.org.br    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/21 15:04:14 by lumedeir          #+#    #+#              #
-#    Updated: 2024/03/04 17:00:51 by lumedeir         ###   ########.fr        #
+#    Updated: 2024/03/07 16:42:33 by lumedeir         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ INCLUDE = -I./includes
 LIBFT = ./src/Libft/
 
 SRC =	main.c \
-		utils.c \
+		map_validate.c \
 		check_input.c \
 
 
