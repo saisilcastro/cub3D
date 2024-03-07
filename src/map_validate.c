@@ -6,7 +6,7 @@
 /*   By: lumedeir < lumedeir@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 15:31:33 by lumedeir          #+#    #+#             */
-/*   Updated: 2024/03/07 17:22:36 by lumedeir         ###   ########.fr       */
+/*   Updated: 2024/03/07 18:30:35 by lumedeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,26 +28,45 @@ static void	get_map_size(t_map *map, char **arr, int i)
 	map->map = &arr[j];
 }
 
-static t_status	character_validade(char **map)
+static void	check_player(t_map *level, int count_player, char c)
+{
+	(void)count_player;
+	if (c == 'N')
+		level->fov = 90;
+	if (c == 'E')
+		level->fov = 0;
+	if (c == 'S')
+		level->fov = 270;
+	if (c == 'W')
+		level->fov = 180;
+}
+
+static t_status	character_validade(t_map *level, char **map)
 {
 	int	i;
 	int	j;
+	int	count_player;
 
-	i = 0;
+	i = -1;
 	j = 0;
+	count_player = 0;
 	while (map[j])
 	{
-		while (map[j][i])
+		while (map[j][++i])
 		{
-			if (map[j][i] != '0' && map[j][i] != '1'
-				&& map[j][i] != 'N' && map[j][i] != 'S'
-					&& map[j][i] != 'E' && map[j][i] != 'W' && map[j][i] != ' ')
+			if (map[j][i] != '0' && map[j][i] != '1' && map[j][i] != 'N'
+				&& map[j][i] != 'S' && map[j][i] != 'E' && map[j][i] != 'W'
+					&& map[j][i] != ' ')
 				return (printf("Invalid character\n"), Off);
-			i++;
+			if (map[j][i] == 'N' || map[j][i] == 'S'
+				|| map[j][i] == 'E' || map[j][i] == 'W')
+				check_player(level, count_player++, map[j][i]);
 		}
-		i = 0;
+		i = -1;
 		j++;
 	}
+	if (count_player != 1)
+		return (printf("Invalid number of players\n"), Off);
 	return (On);
 }
 
@@ -74,7 +93,7 @@ t_status	check_map(char *map_fd, t_map *map)
 	if (!parameters_validate(map))
 		return (Off);
 	get_map_size(map, arr, i);
-	if (!character_validade(map->map))
+	if (!character_validade(map, map->map))
 		return (Off);
 	return (On);
 }

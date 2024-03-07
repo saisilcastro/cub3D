@@ -6,7 +6,7 @@
 /*   By: lumedeir < lumedeir@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 15:00:59 by lumedeir          #+#    #+#             */
-/*   Updated: 2024/03/07 16:50:53 by lumedeir         ###   ########.fr       */
+/*   Updated: 2024/03/07 18:04:01 by lumedeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,10 @@ typedef struct s_pixel{
 typedef struct s_map{
 	char	**map;
 	char	*textures[4];
-	t_pixel	color[2];
+	float	fov;
 	int		map_height;
 	int		map_width;
+	t_pixel	color[2];
 }	t_map;
 
 int			check_input(int argc, char **argv, t_map *map);
