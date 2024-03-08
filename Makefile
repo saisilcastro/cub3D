@@ -56,3 +56,5 @@ play:
 	./$(NAME)
 leak:
 	valgrind --leak-check=full -q ./$(NAME) minimalist.cub
+fucker:
+	valgrind --leak-check=full -q ./$(NAME) map.cub

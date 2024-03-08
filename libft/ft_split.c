@@ -6,40 +6,40 @@
 /*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/02 14:14:58 by lde-cast          #+#    #+#             */
-/*   Updated: 2024/03/05 17:23:43 by lde-cast         ###   ########.fr       */
+/*   Updated: 2024/03/08 15:13:58 by lde-cast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdio.h>
 
-static int	is_symbol(char *i, int c)
+static inline int	word_counter(char *s, int c)
 {
-	if (*i == '\0' || *i == c)
-		return (1);
-	return (0);
-}
-
-static int	word_counter(const char *s, int c)
-{
+	int		i;
 	int		word;
 	char	b_next_char;
 	char	b_current_char;
 
-	b_current_char = 0;
-	b_next_char = 0;
+	if (s == NULL)
+		return (0);
+	(void)c;
 	word = 0;
-	while (*s)
+	i = -1;
+	while (s[++i] != '\0')
 	{
-		b_current_char = is_symbol((char *)s, c);
-		b_next_char = is_symbol((char *)s + 1, c);
+		b_current_char = 0;
+		b_next_char = 0;
+		if (*(s + i) == c || *(s + i) == '\0')
+			b_current_char = 1;
+		if (*(s + i + 1) == c || *(s + i + 1) == '\0')
+			b_next_char = 1;
 		if (!b_current_char && b_next_char)
 			word++;
-		s++;
 	}
 	return (word);
 }
 
-int	begin_get(const char *s, char c, int *pos)
+static inline int	begin_get(const char *s, char c, int *pos)
 {
 	int	begin;
 
@@ -82,18 +82,22 @@ void	copy_word(char **array, const char *s, int c, int word)
 		*(array + i) = (char *)malloc((len + 1) * sizeof(char));
 		j = -1;
 		while (++j < len)
-			array[i][j] = *(s + pos - len + j);
+			*(*(array + i) + j) = *(s + pos - len + j);
 		array[i][j] = '\0';
 		i++;
 	}
 }
 
-char	**ft_split(char const *s, char c)
+char	**ft_split(char *s, char c)
 {
-	char	**array;
 	int		word;
+	char	**array;
 
+	if (!s)
+		return (NULL);
 	word = word_counter(s, c);
+	if (!word)
+		return (NULL);
 	array = (char **)malloc((word + 1) * sizeof(char *));
 	if (!array)
 		return (NULL);

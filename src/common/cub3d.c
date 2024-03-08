@@ -6,7 +6,7 @@
 /*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:01:46 by lde-cast          #+#    #+#             */
-/*   Updated: 2024/03/05 17:40:13 by lde-cast         ###   ########.fr       */
+/*   Updated: 2024/03/08 15:21:01 by lde-cast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,30 +32,23 @@ t_cub3d	*cub_get(void)
 	return (&set);
 }
 
-void	cub_set(t_cub3d *set, char *level)
+void	cub_set(t_cub3d *set)
 {
-	machine_set(set->gear, "cub3D by Luiza and Lisias", vi2d_start(0, 0), vf2d_start(640, 480));
-	if (!set->gear->start(set->gear, Off))
-		return ;
-	cub_function(set);
-}
+	int	status;
 
-void	cub_pop(t_cub3d *set)
-{
-	int		i;
-
-	i = -1;
-	while (++i < 4 && set->level->textures[i])
-		free(set->level->textures[i]);
-	if (set->level->map)
+	if (set->gear->status & 1 << MACHINE_RUNNING)
 	{
-		i = -1;
-		while (*(set->level->map + ++i))
-			free(*(set->level->map + i));
-		free(set->level->map);
+		status = set->gear->status;
+		machine_set(set->gear, "cub3D by Luiza and Lisias", vi2d_start(0, 0),
+			vf2d_start(640, 480));
+		set->gear->status = status;
+		if (!set->gear->start(set->gear, Off))
+			return ;
 	}
-	set->gear->pop(set->gear);
-	mlx_terminate(set->gear->plugin);
+	else
+		machine_set(set->gear, "cub3D by Luiza and Lisias", vi2d_start(0, 0),
+			vf2d_start(640, 480));
+	cub_function(set);
 }
 
 static void inline	cub_show(void *data)
@@ -71,6 +64,23 @@ static void inline	cub_show(void *data)
 	{
 		pos = vi2d_start(gear->map->pos->x, gear->map->pos->y);
 		mlx_image_to_window(gear->plugin, gear->map->image->buffer, pos.x, pos.y);
+	}
+}
+
+void	cub_pop(t_cub3d *set)
+{
+	int		i;
+
+	i = -1;
+	while (++i < 4 && set->level->textures[i])
+		free(set->level->textures[i]);
+	if (set->level->map)
+	{
+		printf("poping the map\n");
+		i = -1;
+		while (*(set->level->map + ++i))
+			free(*(set->level->map + i));
+		free(set->level->map);
 	}
 }
 

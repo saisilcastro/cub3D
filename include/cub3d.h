@@ -6,7 +6,7 @@
 /*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:03:37 by lde-cast          #+#    #+#             */
-/*   Updated: 2024/03/05 16:32:37 by lde-cast         ###   ########.fr       */
+/*   Updated: 2024/03/08 14:45:27 by lde-cast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ typedef struct s_map{
 	int		width;
 }	t_map;
 
+extern t_status		check_map(char *map_fd, t_map *map);
 extern int			check_input(int argc, char **argv);
 
 typedef struct s_chained	t_chained;
@@ -125,6 +126,10 @@ struct s_mouse{
 	}s_wheel[1];
 };
 
+typedef enum{
+	MACHINE_RUNNING
+}t_machine_status;
+
 typedef struct s_machine	t_machine;
 struct s_machine
 {
@@ -137,6 +142,7 @@ struct s_machine
 	t_chained	*image;
 	t_chained	*object;
 	void		*plugin;
+	unsigned	status:1;
 	char		(*start)(t_machine *set, t_status resize);
 	void		(*pop)(t_machine *set);
 };
@@ -168,7 +174,7 @@ struct s_cub3d
 };
 
 extern t_cub3d		*cub_get(void);
-extern void			cub_set(t_cub3d *set, char *level);
+extern void			cub_set(t_cub3d *set);
 extern void			cub_run(t_cub3d *set, void *data);
 extern void			cub_pop(t_cub3d *set);
 

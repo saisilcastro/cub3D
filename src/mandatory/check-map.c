@@ -6,7 +6,7 @@
 /*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 17:31:05 by lumedeir          #+#    #+#             */
-/*   Updated: 2024/03/05 17:44:43 by lde-cast         ###   ########.fr       */
+/*   Updated: 2024/03/08 15:20:12 by lde-cast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,35 +14,33 @@
 #include <fcntl.h>
 #include <libft.h>
 
-static void	get_map_size(t_map *map, char **arr, int i)
+static void	get_map_size(t_map *level)
 {
-	char	*copy;
-	int		j;
+	int		i;
+	char	*line;
 
-	while (On)
+	i = -1;
+	while (level->map[++i])
 	{
-		copy = ft_strdup(arr[i]);
-		copy = ft_strtrim(copy, " ");
-		if (*copy != '\n')
-			break ;
-		free(arr[i++]);
+		line = ft_strtrim(level->map[i], "\n");
+		if (ft_strlen(line) > level->width)
+			level->width = ft_strlen(line);
+		free(line);
+		level->height++;
 	}
-	j = i;
-	map->width = ft_strlen(arr[i]);
-	while (arr[++i])
-	{
-		arr[i] = ft_strtrim(arr[i], "\n");
-		if (ft_strlen(arr[i]) > map->width)
-			map->width = ft_strlen(arr[i]);
-	}
-	map->height = i - j;
-	map->map = &arr[j];
 }
 
 static char	*texture_breaker(char *texture, char *direction)
 {
-	texture = ft_strtrim(ft_strtrim(texture, direction), " ");
-	return (ft_strdup(texture));
+	char	*str;
+	char	*str2;
+
+	str = ft_strtrim(texture, direction);
+	str2 = ft_strtrim(str, " ");
+	free(str);
+	str = ft_strdup(str2);
+	free(str2);
+	return (str);
 }
 
 static t_pixel	get_color(char *line)
@@ -53,42 +51,55 @@ static t_pixel	get_color(char *line)
 
 	array = NULL;
 	array = ft_split(line, ',');
-	color.r = ft_atoi(array[0]);
-	color.g = ft_atoi(array[1]);
-	color.b = ft_atoi(array[2]);
-	color.a = 255;
 	i = -1;
 	while (*(array + ++i))
-		free(*(array + i));
+	{
+		if (i == 0)
+			color.r = ft_atoi(array[i]);
+		else if (i == 1)
+			color.g = ft_atoi(array[i]);
+		else if (i == 2)
+			color.b = ft_atoi(array[i]);
+		free(array[i]);
+	}	
+	color.a = 255;
 	free(array);
+	free(line);
 	return (color);
 }
 
-static inline t_status	checker(t_map **map, char **texture)
+static inline t_status	checker(t_map *map, char **texture)
 {
-	*texture = ft_strtrim(*texture, " ");
-	if (!ft_strncmp(*texture, "NO ", 3) || !ft_strncmp(*texture, "EA ", 3)
-		|| !ft_strncmp(*texture, "SO ", 3) || !ft_strncmp(*texture, "WE ", 3))
+	char		*line;
+	t_status	ok;
+
+	if (!map)
+		return (Off);
+	ok = Off;
+	line = ft_strtrim(*texture, " ");
+	if (!ft_strncmp(line, "NO ", 3) || !ft_strncmp(line, "EA ", 3)
+		|| !ft_strncmp(line, "SO ", 3) || !ft_strncmp(line, "WE ", 3))
 	{	
-		if (!ft_strncmp(*texture, "NO ", 3))
-			(*map)->textures[0] = texture_breaker(*texture, "NO ");
-		else if (!ft_strncmp(*texture, "EA ", 3))
-			(*map)->textures[1] = texture_breaker(*texture, "EA ");
-		else if (!ft_strncmp(*texture, "SO ", 3))
-			(*map)->textures[2] = texture_breaker(*texture, "SO ");
-		else if (!ft_strncmp(*texture, "WE ", 3))
-			(*map)->textures[3] = texture_breaker(*texture, "WE ");
-		return (On);
+		if (!ft_strncmp(line, "NO ", 3))
+			map->textures[0] = texture_breaker(line, "NO ");
+		else if (!ft_strncmp(line, "EA ", 3))
+			map->textures[1] = texture_breaker(line, "EA ");
+		else if (!ft_strncmp(line, "SO ", 3))
+			map->textures[2] = texture_breaker(line, "SO ");
+		else if (!ft_strncmp(line, "WE ", 3))
+			map->textures[3] = texture_breaker(line, "WE ");
+		ok = On;
 	}
-	if (!ft_strncmp(*texture, "F ", 2) || !ft_strncmp(*texture, "C ", 2))
+	if (!ft_strncmp(line, "F ", 2) || !ft_strncmp(line, "C ", 2))
 	{
-		if (!ft_strncmp(*texture, "C ", 2))
-			(*map)->color[1] = get_color(texture_breaker(*texture, "C "));
+		if (!ft_strncmp(line, "C ", 2))
+			map->color[1] = get_color(texture_breaker(*texture, "C "));
 		else if (!ft_strncmp(*texture, "F ", 2))
-			(*map)->color[0] = get_color(texture_breaker(*texture, "F "));
-		return (On);
+			map->color[0] = get_color(texture_breaker(*texture, "F "));
+		ok = On;
 	}
-	return (Off);
+	free(line);
+	return (ok);
 }
 
 static t_status	parameters_validate(t_map *map)
@@ -100,47 +111,71 @@ static t_status	parameters_validate(t_map *map)
 	return (On);
 }
 
-static t_status	check_map(char *map_fd, t_map *map)
+// static t_status	character_validade(char **map)
+// {
+// 	int	i;
+// 	int	j;
+
+// 	i = -1;
+// 	j = 0;
+// 	while (map[j][i--])
+// 	{
+// 		while (map[j][++i])
+// 			if (map[j][i] != '0' && map[j][i] != '1'
+// 				&& map[j][i] != 'N' && map[j][i] != 'S'
+// 					&& map[j][i] != 'E' && map[j][i] != 'W' && map[j][i] != ' ')
+// 				return (printf("Invalid character\n"), Off);
+// 		i = 0;
+// 		j++;
+// 	}
+// 	return (On);
+// }
+
+t_status	check_map(char *map_fd, t_map *level)
 {
 	int		fd;
 	int		i;
 	char	buffer[65535];
-	char	**arr;
+	char	**array;
 
 	fd = open(map_fd, O_RDONLY);
 	if (fd == -1)
-		return ((printf("Invalid path")), Off);
-	i = -1;
-	read(fd, buffer, 65535);
+		return ((printf("Invalid path\n")), Off);
+	i = read(fd, buffer, 65535);
 	close(fd);
-	arr = ft_split(buffer, '\n');
-	if (arr[0] && *arr[0] && *arr[0] == '\n')
-		return (printf("Empty map"), Off);
-	while (arr[++i] && *arr[i] && On)
+	buffer[i] = '\0';
+	level->map = ft_split(buffer, '\n');
+	if (!level->map || !level->map[0] || !level->map[0][0])
+		return (printf("Empty map\n"), Off);
+	i = -1;
+	while (level->map[++i] && *level->map[i] && On)
 	{
-		if (!checker(&map, &arr[i]))
+		if (!checker(level, &level->map[i]))
 			break ;
-		free(arr[i]);
+		free(level->map[i]);
 	}
-	if (!parameters_validate(map))
-		return (printf("Invalid parameters"), 0);
-	get_map_size(map, arr, i);
+	array = &level->map[i];
+	i = -1;
+	while (array[++i])
+		level->map[i] = array[i];
+	level->map[i] = NULL;
+	if (!parameters_validate(level))
+		return (printf("Invalid parameters\n"), 0);
+	get_map_size(level);
+	//character_validade(level->map);
 	return (On);
 }
 
 int	check_input(int argc, char **argv)
 {
 	int		len;
-	t_cub3d	*cub;
 
 	if (argc != 2)
 		return (printf("Invalid number of arguments"), 0);
 	len = ft_strlen(argv[1]) - 4;
 	if (ft_strncmp(".cub", &argv[1][len], 4) != 0)
 		return (printf("Invalid map file extension"), 0);
-	cub = cub_get();
-	cub_set(cub, argv[1]);
-	if (!check_map(argv[1], cub->level))
-		return (0);
+	if (access(argv[1], R_OK) == -1)
+		return (printf("Access not granted\n"), 0);
 	return (1);
 }

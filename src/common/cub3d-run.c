@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d-run.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mister-coder <mister-coder@student.42.f    +#+  +:+       +#+        */
+/*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 03:43:49 by mister-code       #+#    #+#             */
-/*   Updated: 2024/02/28 01:05:16 by mister-code      ###   ########.fr       */
+/*   Updated: 2024/03/08 15:09:03 by lde-cast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,21 @@ static void	mlx_plugin_run(t_cub3d *set)
 
 void	cub_run(t_cub3d *set, void *data)
 {
-	if (set->init)
-		set->init(set, data);
-	mlx_plugin_run(set);
-	if (set->update)
-		set->update(set);
-	mlx_loop(set->gear->plugin);
-	if (set->pop)
-		set->pop(set);
+	if (set->gear->status & 1 << MACHINE_RUNNING)
+	{
+		if (set->init)
+			set->init(set, data);
+		mlx_plugin_run(set);
+		if (set->update)
+			set->update(set);
+		mlx_loop(set->gear->plugin);
+		if (set->pop)
+			set->pop(set);
+	}
 	cub_pop(set);
+	set->gear->pop(set->gear);
+	if (set->gear->status & 1 << MACHINE_RUNNING)
+		mlx_terminate(set->gear->plugin);
 }
 
 void	cub_map_set(int id)

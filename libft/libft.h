@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mister-coder <mister-coder@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 13:47:27 by lde-cast          #+#    #+#             */
-/*   Updated: 2023/05/05 12:49:23 by lde-cast         ###   ########.fr       */
+/*   Updated: 2024/03/05 22:45:20 by mister-code      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ extern char		*ft_strtrim(char const *s, const char *set);
 // Allocates (with malloc(3)) and returns an array of strings obtained by
 // splitting ’s’ using the character ’c’ as a delimiter. The array must end with
 // a NULL pointer.
-extern char		**ft_split(char const *s, char c);
+extern char		**ft_split(char *s, char c);
 // Allocates (with malloc(3)) and returns a string representing the integer
 // received as an argument. Negative numbers must be handled.
 extern char		*ft_itoa(int n);

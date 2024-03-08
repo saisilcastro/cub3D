@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   machine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mister-coder <mister-coder@student.42.f    +#+  +:+       +#+        */
+/*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 15:13:08 by lde-cast          #+#    #+#             */
-/*   Updated: 2024/02/28 01:27:45 by mister-code      ###   ########.fr       */
+/*   Updated: 2024/03/08 14:54:29 by lde-cast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	machine_set(t_machine *set, char *title, t_vi2d pos, t_vf2d size)
 	set->mouse->s_wheel->left = 0;
 	set->mouse->s_wheel->top = 0;
 	set->map[0] = object_start(0, "object", vf2d_start(0, 0), NULL);
+	set->status = 0x0;
 	set->image = NULL;
 	set->object = NULL;
 	set->plugin = NULL;
