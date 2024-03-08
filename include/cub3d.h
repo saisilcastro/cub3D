@@ -6,7 +6,7 @@
 /*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:03:37 by lde-cast          #+#    #+#             */
-/*   Updated: 2024/03/08 14:45:27 by lde-cast         ###   ########.fr       */
+/*   Updated: 2024/03/08 16:15:54 by lde-cast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ struct s_mouse{
 	}s_wheel[1];
 };
 
-typedef enum{
+typedef enum s_machine_status{
 	MACHINE_RUNNING
 }t_machine_status;
 
@@ -194,6 +194,7 @@ extern void			ray_cast(t_object *o, t_image *i, t_vf2d s, char *m);
 // user function
 extern void			user_init(t_cub3d *set, void *data);
 extern void			user_update(void *data);
+extern void			map_draw(t_cub3d *set);
 extern void			user_draw(t_cub3d *set);
 
 #endif

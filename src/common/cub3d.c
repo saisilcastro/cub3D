@@ -6,24 +6,24 @@
 /*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:01:46 by lde-cast          #+#    #+#             */
-/*   Updated: 2024/03/08 15:21:01 by lde-cast         ###   ########.fr       */
+/*   Updated: 2024/03/08 16:50:08 by lde-cast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3d.h>
 
-static void	cub_function(t_cub3d *set);
-extern t_vi2d	*cub_mouse_pos(void);
-extern char	cub_mouse_press(t_mouse_status button);
+static void			cub_function(t_cub3d *set);
+extern t_vi2d		*cub_mouse_pos(void);
+extern char			cub_mouse_press(t_mouse_status button);
 extern t_chained	*image_create(int id, t_vf2d size);
-extern char	image_next_last(t_chained *image);
-extern char	image_next_first(t_chained *image);
-extern t_image	*image_search(int id);
-extern void	cub_map_set(int id);
+extern char			image_next_last(t_chained *image);
+extern char			image_next_first(t_chained *image);
+extern t_image		*image_search(int id);
+extern void			cub_map_set(int id);
 extern t_chained	*cub_object_push(int id, char *n, t_vf2d p, t_image *i);
-extern char	object_next_first(t_chained *object);
-extern char	object_next_last(t_chained *object);
-extern t_object	*object_search(int id);
+extern char			object_next_first(t_chained *object);
+extern char			object_next_last(t_chained *object);
+extern t_object		*object_search(int id);
 
 t_cub3d	*cub_get(void)
 {
@@ -63,7 +63,8 @@ static void inline	cub_show(void *data)
 	if (gear->map->image)
 	{
 		pos = vi2d_start(gear->map->pos->x, gear->map->pos->y);
-		mlx_image_to_window(gear->plugin, gear->map->image->buffer, pos.x, pos.y);
+		mlx_image_to_window(gear->plugin,
+			gear->map->image->buffer, pos.x, pos.y);
 	}
 }
 
@@ -76,7 +77,6 @@ void	cub_pop(t_cub3d *set)
 		free(set->level->textures[i]);
 	if (set->level->map)
 	{
-		printf("poping the map\n");
 		i = -1;
 		while (*(set->level->map + ++i))
 			free(*(set->level->map + i));

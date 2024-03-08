@@ -25,6 +25,7 @@ SRC_PLUGIN =	mlx-plugin.c \
 				mlx-plugin-rect.c \
 				mlx-ray-cast.c
 SRC_MANDATORY = check-map.c \
+				map-draw.c \
 				user-init.c \
 				user-update.c \
 				user-draw.c
@@ -37,14 +38,17 @@ SRCOBJ = $(SRC:%.c=${OBJ}/%.o)
 LIB = -L./MLX42/build \
 	  -L./libft
 FLAG = -lmlx42 -ldl -lglfw -pthread -lm -lft
+PURPLE = \033[1;35m
 
 all: $(NAME)
 $(NAME): $(SRCOBJ)
 	@$(MAKE) -C ./libft --silent
-	$(CC) $^ $(LIB) $(FLAG) -o $(NAME)
+	@printf "\nThe Makefile of [$(PURPLE)Cub3D\033[0m] has been compiled!🐚\n"
+	@$(CC) $^ $(LIB) $(FLAG) -o $(NAME)
 ${OBJ}/%.o : %.c
-	$(call CREATE,${OBJ})
-	$(CC) -c $< -o $@ $(INCLUDE)
+	@$(call CREATE,${OBJ})
+	@printf "\rCub3D: building $@                      "
+	@$(CC) -c $< -o $@ $(INCLUDE)
 clean:
 	$(call REMOVE,${OBJ})
 	$(call REMOVE,./libft/*.o)
@@ -53,7 +57,7 @@ fclean: clean
 	$(call REMOVE,./libft/libft.a)
 re: fclean all
 play:
-	./$(NAME)
+	./$(NAME) map.cub
 leak:
 	valgrind --leak-check=full -q ./$(NAME) minimalist.cub
 fucker:

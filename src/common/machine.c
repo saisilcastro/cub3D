@@ -6,7 +6,7 @@
 /*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 15:13:08 by lde-cast          #+#    #+#             */
-/*   Updated: 2024/03/08 14:54:29 by lde-cast         ###   ########.fr       */
+/*   Updated: 2024/03/08 17:12:07 by lde-cast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ static inline char	machine_start(t_machine *set, t_status resize)
 
 static inline void	machine_pop(t_machine *set)
 {
+	object_pop(set->map);
 	if (set->image)
 		chained_pop(&set->image, image_pop);
 	if (set->object)

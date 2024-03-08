@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   image.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mister-coder <mister-coder@student.42.f    +#+  +:+       +#+        */
+/*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 19:25:14 by mister-code       #+#    #+#             */
-/*   Updated: 2024/02/28 01:25:52 by mister-code      ###   ########.fr       */
+/*   Updated: 2024/03/08 17:09:42 by lde-cast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3d.h>
 
-t_image *image_push(int id, void *buffer)
+t_image	*image_push(int id, void *buffer)
 {
 	t_image	*set;
 
@@ -24,7 +24,7 @@ t_image *image_push(int id, void *buffer)
 	return (set);
 }
 
-t_chained   *image_create(int id, t_vf2d size)
+t_chained	*image_create(int id, t_vf2d size)
 {
 	t_image	*image;
 	t_vi2d	area;
