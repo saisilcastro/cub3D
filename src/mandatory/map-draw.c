@@ -6,13 +6,37 @@
 /*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 16:11:34 by lde-cast          #+#    #+#             */
-/*   Updated: 2024/03/08 17:25:16 by lde-cast         ###   ########.fr       */
+/*   Updated: 2024/03/11 17:06:35 by lde-cast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3d.h>
 
+static inline void	minimap(t_cub3d *set);
+static inline void	floor_ceil_draw(t_cub3d *set);
+
 void	map_draw(t_cub3d *set)
+{
+	floor_ceil_draw(set);
+}
+
+static inline void	floor_ceil_draw(t_cub3d *set)
+{
+	t_vf2d	b;
+	t_vf2d	size;
+	t_image	*img;
+	int		color;
+
+	img = set->gear->map->a;
+	size = vf2d_start(set->gear->size->x, set->gear->size->y * 0.5);
+	mlx_draw_fill_rect(img, vf2d_start(0, 0), size,
+		pixel_to_int(&set->level->color[1]));
+	mlx_draw_fill_rect(img, vf2d_start(0, set->gear->size->y * 0.5), size,
+		pixel_to_int(set->level->color));
+	mlx_texture_draw(set->image_search(1), vi2d_start(0, 0));
+}
+
+static inline void	minimap(t_cub3d *set)
 {
 	t_vi2d	i;
 	t_vi2d	pos;
@@ -30,10 +54,10 @@ void	map_draw(t_cub3d *set)
 			color = 0xFFFF0000;
 		else
 			color = 0xFFFFFFFF;
-		b.x = (pos.x * 32) + 1;
-		b.y = (pos.y * 32) + 1;
-		e.x = b.x + 32 - 1;
-		e.y = b.y + 32 - 1;
-		mlx_draw_fill_rect(set->gear->map->image, b, e, color);
+		b.x = (pos.x * 11) + 1;
+		b.y = (pos.y * 11) + 1;
+		e.x = 11 - 1;
+		e.y = 11 - 1;
+		mlx_draw_fill_rect(set->gear->map->a, b, e, color);
 	}
 }

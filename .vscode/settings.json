@@ -13,7 +13,12 @@
 		"image_of.h": "c",
 		"struct.h": "c",
 		"level.h": "c",
-		"primitive.h": "c"
+		"primitive.h": "c",
+		"array": "c",
+		"string_view": "c",
+		"initializer_list": "c",
+		"ranges": "c",
+		"utility": "c"
 	},
 	"git.ignoreLimitWarning": true
 }

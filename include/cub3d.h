@@ -6,7 +6,7 @@
 /*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:03:37 by lde-cast          #+#    #+#             */
-/*   Updated: 2024/03/08 16:15:54 by lde-cast         ###   ########.fr       */
+/*   Updated: 2024/03/11 17:43:57 by lde-cast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,10 @@ typedef struct s_pixel{
 	unsigned char	b;
 	unsigned char	a;
 }	t_pixel;
+
+extern int			pixel_to_int(t_pixel *set);
+extern uint32_t		texture_to_int(mlx_texture_t *a, int x, int y);
+extern t_pixel		int_to_pixel(unsigned int color);
 
 typedef struct s_map{
 	char	**map;
@@ -85,10 +89,11 @@ typedef struct s_image		t_image;
 struct s_image
 {
 	int		id;
-	void	*buffer;
+	void	*image;
+	void	*texture;
 };
 
-extern t_image		*image_push(int id, void *buffer);
+extern t_image		*image_push(int id, void *image, void *texture);
 
 enum e_object{
 	OBJECT_PUSH,
@@ -106,7 +111,7 @@ struct s_object
 	t_vf2d			size[1];
 	t_vf2d			zoom[1];
 	float			angle;
-	t_image			*image;
+	t_image			*a;
 	unsigned char	status:2;
 };
 
@@ -158,9 +163,11 @@ struct s_cub3d
 	t_vi2d		*(*mouse_pos)();
 	char		(*mouse_press)(t_mouse_status button);
 	t_chained	*(*image_create)(int id, t_vf2d size);
+	t_chained	*(*image_load)(int id, char *path);
 	t_image		*(*image_search)(int id);
 	char		(*image_next_first)(t_chained *set);
 	char		(*image_next_last)(t_chained *set);
+	t_vi2d		(*image_size)(t_image *set);
 	void		(*map_set)(int id);
 	t_chained	*(*object_push)(int id, char *name, t_vf2d pos, t_image *img);
 	t_object	*(*object_search)(int id);
@@ -185,6 +192,7 @@ extern t_vf2d		line_angle_get(float *angle, t_vf2d size);
 extern void			mlx_event_start(t_machine *set);
 extern void			draw_pixel(t_image *img, int x, int y, int color);
 extern void			mlx_image_clear(t_image *s, int color);
+extern void			mlx_texture_draw(t_image *s, t_vi2d pos);
 extern void			mlx_draw_line(t_image *s, t_vf2d b, t_vf2d e, int color);
 extern void			mlx_draw_rect(t_image *s, t_vf2d b, t_vf2d e, int color);
 extern void			mlx_draw_fill_rect(t_image *s, t_vf2d b, t_vf2d sz, int c);

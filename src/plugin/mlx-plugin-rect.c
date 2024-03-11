@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx-plugin-rect.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mister-coder <mister-coder@student.42.f    +#+  +:+       +#+        */
+/*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/25 22:04:55 by mister-code       #+#    #+#             */
-/*   Updated: 2024/02/29 00:09:22 by mister-code      ###   ########.fr       */
+/*   Updated: 2024/03/11 15:35:41 by lde-cast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,15 +49,15 @@ void	mlx_image_clear(t_image *set, int color)
 	if (!set)
 		return ;
 	i = -1;
-	size = ((mlx_image_t *)set->buffer)->width
-		* ((mlx_image_t *)set->buffer)->height;
+	size = ((mlx_image_t *)set->image)->width
+		* ((mlx_image_t *)set->image)->height;
 	while (++i < size)
 	{
-		offset = ((i / ((mlx_image_t *)set->buffer)->width)
-				* ((mlx_image_t *)set->buffer)->width
-				+ (i % ((mlx_image_t *)set->buffer)->width))
+		offset = ((i / ((mlx_image_t *)set->image)->width)
+				* ((mlx_image_t *)set->image)->width
+				+ (i % ((mlx_image_t *)set->image)->width))
 			* sizeof(uint32_t);
-		start = ((mlx_image_t *)set->buffer)->pixels + offset;
+		start = ((mlx_image_t *)set->image)->pixels + offset;
 		*(uint32_t *)start = color;
 	}
 }

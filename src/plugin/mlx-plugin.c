@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlx-plugin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mister-coder <mister-coder@student.42.f    +#+  +:+       +#+        */
+/*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 03:59:44 by mister-code       #+#    #+#             */
-/*   Updated: 2024/02/28 01:39:30 by mister-code      ###   ########.fr       */
+/*   Updated: 2024/03/11 15:35:08 by lde-cast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	draw_pixel(t_image *set, int x, int y, int color)
 
 	if (!set)
 		return ;
-	img = set->buffer;
+	img = set->image;
 	if (x < 0 || y < 0 || x >= img->width || y >= img->height)
 		return ;
 	offset = (y * img->width + x) * sizeof(uint32_t);

@@ -10,8 +10,10 @@ INCLUDE = -I./include \
 SRC_COMMON = 	chained.c \
 				angle.c \
 				math-of.c \
+				pixel.c \
 				image.c \
 				image-next.c \
+				image-util.c \
 				object.c \
 				object-next.c \
 				object-angle.c \
@@ -23,6 +25,7 @@ SRC_PLUGIN =	mlx-plugin.c \
 				mlx-plugin-line.c \
 				mlx-plugin-mouse.c \
 				mlx-plugin-rect.c \
+				mlx-texture-draw.c \
 				mlx-ray-cast.c
 SRC_MANDATORY = check-map.c \
 				map-draw.c \

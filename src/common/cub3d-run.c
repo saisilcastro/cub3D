@@ -6,7 +6,7 @@
 /*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 03:43:49 by mister-code       #+#    #+#             */
-/*   Updated: 2024/03/08 15:09:03 by lde-cast         ###   ########.fr       */
+/*   Updated: 2024/03/11 15:34:04 by lde-cast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,5 @@ void	cub_run(t_cub3d *set, void *data)
 
 void	cub_map_set(int id)
 {
-	cub_get()->gear->map->image = cub_get()->image_search(id);
+	cub_get()->gear->map->a = cub_get()->image_search(id);
 }
