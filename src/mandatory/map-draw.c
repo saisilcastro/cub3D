@@ -6,7 +6,7 @@
 /*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 16:11:34 by lde-cast          #+#    #+#             */
-/*   Updated: 2024/03/11 17:06:35 by lde-cast         ###   ########.fr       */
+/*   Updated: 2024/03/12 16:26:08 by lde-cast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static inline void	floor_ceil_draw(t_cub3d *set)
 		pixel_to_int(&set->level->color[1]));
 	mlx_draw_fill_rect(img, vf2d_start(0, set->gear->size->y * 0.5), size,
 		pixel_to_int(set->level->color));
-	mlx_texture_draw(set->image_search(1), vi2d_start(0, 0));
+	mlx_texture_draw(set->image_search(1), vi2d_start(10, 50), vf2d_start(5, 5));
 }
 
 static inline void	minimap(t_cub3d *set)

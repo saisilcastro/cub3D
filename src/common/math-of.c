@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   math-of.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mister-coder <mister-coder@student.42.f    +#+  +:+       +#+        */
+/*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 15:37:16 by lde-cast          #+#    #+#             */
-/*   Updated: 2024/02/29 07:08:18 by mister-code      ###   ########.fr       */
+/*   Updated: 2024/03/12 17:55:35 by lde-cast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,17 @@ t_vi2d	vi2d_start(int x, int y)
 t_vf2d	vf2d_start(float x, float y)
 {
 	return ((t_vf2d){x, y});
+}
+
+int	calculate_rx(float px, int blocksize)
+{
+	int	shiftamount;
+	int	blockmask;
+
+	shiftamount = 0;
+	blockmask = 0;
+	while ((1 << shiftamount) < blocksize)
+		shiftamount++;
+	blockmask = (1 << shiftamount) - 1;
+	return ((int)(px / blocksize) & ~blockmask) + blocksize;
 }

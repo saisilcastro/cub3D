@@ -6,7 +6,7 @@
 /*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:03:37 by lde-cast          #+#    #+#             */
-/*   Updated: 2024/03/11 17:43:57 by lde-cast         ###   ########.fr       */
+/*   Updated: 2024/03/12 17:46:50 by lde-cast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # include <stdio.h>
 # include <string.h>
 # include <stdlib.h>
+# include <fcntl.h>
+# include <libft.h>
 
 typedef enum e_status{
 	Off,
@@ -38,13 +40,18 @@ extern t_pixel		int_to_pixel(unsigned int color);
 typedef struct s_map{
 	char	**map;
 	char	*textures[4];
-	t_pixel	color[2];
+	float	fov;
 	int		height;
 	int		width;
+	t_pixel	color[2];
 }	t_map;
 
-extern t_status		check_map(char *map_fd, t_map *map);
+extern t_status		get_map(char *map_fd, t_map *map);
 extern int			check_input(int argc, char **argv);
+extern t_status		is_character_of_map(char *line);
+extern void			check_player(t_map *level, int count_player, char c);
+extern char			*texture_breaker(char *texture, char *direction);
+extern t_status		map_validate(t_map *level, char **array);
 
 typedef struct s_chained	t_chained;
 struct s_chained{
@@ -77,6 +84,18 @@ struct s_vf2d
 };
 
 extern t_vf2d		vf2d_start(float x, float y);
+
+typedef struct s_delta_f	t_delta_f;
+struct s_delta_f{
+	t_vf2d	b[1];
+	t_vf2d	e[1];
+};
+
+typedef struct s_delta_i	t_detal_i;
+struct s_delta_i{
+	t_vi2d	b[1];
+	t_vi2d	e[1];
+};
 
 typedef enum e_mouse_status
 {
@@ -185,18 +204,21 @@ extern void			cub_set(t_cub3d *set);
 extern void			cub_run(t_cub3d *set, void *data);
 extern void			cub_pop(t_cub3d *set);
 
+// math
+extern int			calculate_rx(float px, int blocksize);
+
 // angle function
 extern t_vf2d		line_angle_end(t_vf2d begin, t_vf2d vel);
 extern t_vf2d		line_angle_get(float *angle, t_vf2d size);
+
 // plugin function
 extern void			mlx_event_start(t_machine *set);
 extern void			draw_pixel(t_image *img, int x, int y, int color);
 extern void			mlx_image_clear(t_image *s, int color);
-extern void			mlx_texture_draw(t_image *s, t_vi2d pos);
+extern void			mlx_texture_draw(t_image *s, t_vi2d pos, t_vf2d	zoom);
 extern void			mlx_draw_line(t_image *s, t_vf2d b, t_vf2d e, int color);
 extern void			mlx_draw_rect(t_image *s, t_vf2d b, t_vf2d e, int color);
 extern void			mlx_draw_fill_rect(t_image *s, t_vf2d b, t_vf2d sz, int c);
-
 extern void			ray_cast(t_object *o, t_image *i, t_vf2d s, char *m);
 
 // user function

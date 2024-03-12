@@ -6,7 +6,7 @@
 /*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 19:25:14 by mister-code       #+#    #+#             */
-/*   Updated: 2024/03/11 15:42:07 by lde-cast         ###   ########.fr       */
+/*   Updated: 2024/03/12 14:55:24 by lde-cast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,6 @@ void	image_pop(void *data)
 	if (set->image)
 		mlx_delete_image(cub_get()->gear->plugin, set->image);
 	if (set->texture)
-		mlx_delete_image(cub_get()->gear->plugin, set->texture);
+		mlx_delete_texture(set->texture);
 	free(set);
 }

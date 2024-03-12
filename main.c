@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lumedeir < lumedeir@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:00:12 by lde-cast          #+#    #+#             */
-/*   Updated: 2024/03/08 14:50:19 by lde-cast         ###   ########.fr       */
+/*   Updated: 2024/03/12 12:01:36 by lumedeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	main(int argc, char **argv)
 	if (check_input(argc, argv))
 	{
 		cub = cub_get();
-		if (check_map(argv[1], cub_get()->level))
+		if (get_map(argv[1], cub_get()->level))
 			cub_get()->gear->status = 0x1;
 		cub_set(cub);
 		cub_get()->init = user_init;

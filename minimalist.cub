@@ -1,9 +1,10 @@
-NO ./assets/textures/1_no.xpm
-SO ./assets/textures/1_so.xpm
-WE ./assets/textures/1_we.xpm
-EA ./assets/textures/1_ea.xpm
+NO ./assets/textures/1_no.png
+SO ./assets/textures/1_so.png
+WE ./assets/textures/1_we.png
+EA ./assets/textures/1_ea.png
 F 0,127,0
 C 130,202,255
+
 11111111111111111111
 10000000000000000001
 10010101010101010101

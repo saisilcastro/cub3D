@@ -6,13 +6,13 @@
 /*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 16:29:12 by lde-cast          #+#    #+#             */
-/*   Updated: 2024/03/11 17:34:40 by lde-cast         ###   ########.fr       */
+/*   Updated: 2024/03/12 16:24:34 by lde-cast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3d.h>
 
-void	mlx_texture_draw(t_image *s, t_vi2d b)
+void	mlx_texture_draw(t_image *s, t_vi2d b, t_vf2d zoom)
 {
 	int				i;
 	int				size;
@@ -22,15 +22,13 @@ void	mlx_texture_draw(t_image *s, t_vi2d b)
 
 	img = cub_get()->gear->map->a;
 	text = s->texture;
-	size = text->width * text->height;
+	size = (text->width * zoom.x) * (text->height * zoom.y);
 	i = -1;
 	while (++i < size)
 	{
-		pos.x = (i % text->width);
-		pos.y = (i / text->width);
-		unsigned int	color = texture_to_int(text, pos.x, pos.y);
-		t_pixel	p = int_to_pixel(color);
-		printf("%i %i %i %i\n", p.r, p.g, p.b, p.a);
-		draw_pixel(img, pos.x + b.x, pos.y + b.y, color);
+		pos.x = i % (int)(text->width * zoom.x);
+		pos.y = i / (text->width * zoom.x);
+		draw_pixel(img, pos.x + b.x, pos.y + b.y,
+			texture_to_int(text, (float)pos.x / zoom.x, (float)pos.y / zoom.y));
 	}
 }
