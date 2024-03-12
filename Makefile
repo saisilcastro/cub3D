@@ -1,58 +1,69 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: lumedeir < lumedeir@student.42sp.org.br    +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/02/21 15:04:14 by lumedeir          #+#    #+#              #
-#    Updated: 2024/03/07 16:42:33 by lumedeir         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
-# The name of the executable
-NAME = cub3D
-
-# Compilation flags
-CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g3 
-BUILD = ./objs/
-
-# Libft
-INCLUDE = -I./includes
-LIBFT = ./src/Libft/
-
-SRC =	main.c \
-		map_validate.c \
-		check_input.c \
-
-
-$(BUILD)%.o:src/%.c
-		@mkdir -p $(BUILD) 
-		@$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDE)
-
-OBJ = $(addprefix $(BUILD), $(SRC:.c=.o))
-
+ifneq ($(OS), Windows_NT)
+	NAME = cub3D
+	CREATE = @mkdir -p $(1)
+	REMOVE = @rm -rf $(1)
+endif
+VPATH = src: ./src/common src: ./src/mandatory src: ./src/plugin
+INCLUDE = -I./include \
+		  -I./MLX42/include \
+		  -I./libft
+SRC_COMMON = 	chained.c \
+				angle.c \
+				math-of.c \
+				pixel.c \
+				image.c \
+				image-next.c \
+				image-util.c \
+				object.c \
+				object-next.c \
+				object-angle.c \
+				machine.c \
+				cub3d-run.c \
+				cub3d-mouse.c \
+				cub3d.c
+SRC_PLUGIN =	mlx-plugin.c \
+				mlx-plugin-line.c \
+				mlx-plugin-mouse.c \
+				mlx-plugin-rect.c \
+				mlx-texture-draw.c \
+				mlx-ray-cast.c
+SRC_MANDATORY = map-get.c \
+				map-validate.c \
+				map-utils.c \
+				map-draw.c \
+				user-init.c \
+				user-update.c \
+				user-draw.c
+SRC =	$(SRC_COMMON) \
+		$(SRC_PLUGIN) \
+		$(SRC_MANDATORY) \
+		main.c
+OBJ = obj
+SRCOBJ = $(SRC:%.c=${OBJ}/%.o)
+LIB = -L./MLX42/build \
+	  -L./libft
+FLAG = -lmlx42 -ldl -lglfw -pthread -lm -lft
 PURPLE = \033[1;35m
-WHITE = \033[1;37m
-CYAN= \033[0;36m
 
 all: $(NAME)
-
-$(NAME) : $(OBJ)
-		@make -C $(LIBFT) --silent
-		@$(CC) $(OBJ) $(CFLAGS) $(LIBFT)/libft.a -o $(NAME)
-		@echo "$(PURPLE)The Makefile of [CUB_3D] has been compiled!🤠"
-
+$(NAME): $(SRCOBJ)
+	@$(MAKE) -C ./libft --silent
+	@printf "\nThe Makefile of [$(PURPLE)Cub3D\033[0m] has been compiled!🐚\n"
+	@$(CC) $^ $(LIB) $(FLAG) -o $(NAME)
+${OBJ}/%.o : %.c
+	@$(call CREATE,${OBJ})
+	@printf "\rCub3D: building $@                      "
+	@$(CC) -c $< -o $@ $(INCLUDE)
 clean:
-		@make clean -C $(LIBFT) --silent
-		@rm -rf $(BUILD) $(BUILD_BONUS)
-
+	$(call REMOVE,${OBJ})
+	$(call REMOVE,./libft/*.o)
 fclean: clean
-		@echo "$(WHITE)   Cleaning all... 🧹"
-		@make fclean -C $(LIBFT) --silent
-		@rm -f $(NAME)
-
+	$(call REMOVE,${NAME})
+	$(call REMOVE,./libft/libft.a)
 re: fclean all
-
-.PHONY: all clean fclean re
+play:
+	./$(NAME) map.cub
+leak:
+	valgrind --leak-check=full --show-leak-kinds=all ./$(NAME) minimalist.cub
+fucker:
+	valgrind --leak-check=full -q ./$(NAME) map.cub
