@@ -27,7 +27,9 @@ SRC_PLUGIN =	mlx-plugin.c \
 				mlx-plugin-rect.c \
 				mlx-texture-draw.c \
 				mlx-ray-cast.c
-SRC_MANDATORY = check-map.c \
+SRC_MANDATORY = map-utils.c \
+				map-get.c \
+				map-validate.c \
 				map-draw.c \
 				user-init.c \
 				user-update.c \
