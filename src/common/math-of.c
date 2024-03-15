@@ -3,18 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   math-of.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mister-coder <mister-coder@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 15:37:16 by lde-cast          #+#    #+#             */
-/*   Updated: 2024/03/12 17:55:35 by lde-cast         ###   ########.fr       */
+/*   Updated: 2024/03/15 01:23:49 by mister-code      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3d.h>
 
-float	degree_to_rad(float angle)
+float	deg_to_rad(float angle)
 {
-	return (angle * M_PI / 180.0);
+	float	value;
+
+	value = angle * M_PI / 180.0;
+	if (value >= -(M_PI + M_PI) && value <= M_PI + M_PI)
+		return (value);
+	return (0);
 }
 
 t_vi2d	vi2d_start(int x, int y)
@@ -27,15 +32,30 @@ t_vf2d	vf2d_start(float x, float y)
 	return ((t_vf2d){x, y});
 }
 
-int	calculate_rx(float px, int blocksize)
+float	limit(int begin, int size, float edge)
 {
-	int	shiftamount;
-	int	blockmask;
+	return ((begin / size * size) - edge);
+}
 
-	shiftamount = 0;
-	blockmask = 0;
-	while ((1 << shiftamount) < blocksize)
-		shiftamount++;
-	blockmask = (1 << shiftamount) - 1;
-	return ((int)(px / blocksize) & ~blockmask) + blocksize;
+t_vf2d	vector_pos(t_vf2d *pos)
+{
+	t_map	*the;
+	t_vf2d	vec;
+
+	the = cub_get()->level;
+	vec.x = floor(pos->x / the->block->x);
+	vec.y = floor(pos->y / the->block->y);
+	if (vec.x < 0)
+		vec.x = 0;
+	if (vec.y < 0)
+		vec.y = 0;
+	if (vec.x > the->size->x - 1)
+		vec.x = the->size->x - 1;
+	if (vec.y > the ->size->y - 1)
+		vec.y = the->size->y - 1;
+	return (vec);
+}
+
+float pythag(t_vf2d *set) {
+    return sqrtf(set->x * set->x + set->y * set->y);
 }

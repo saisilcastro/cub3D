@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mister-coder <mister-coder@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:01:46 by lde-cast          #+#    #+#             */
-/*   Updated: 2024/03/11 17:14:22 by lde-cast         ###   ########.fr       */
+/*   Updated: 2024/03/14 02:05:01 by mister-code      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,17 @@ void	cub_set(t_cub3d *set)
 	{
 		status = set->gear->status;
 		machine_set(set->gear, "cub3D by Luiza and Lisias", vi2d_start(0, 0),
-			vf2d_start(640, 480));
+			vf2d_start(800, 600));
 		set->gear->status = status;
 		if (!set->gear->start(set->gear, Off))
 			return ;
 	}
 	else
 		machine_set(set->gear, "cub3D by Luiza and Lisias", vi2d_start(0, 0),
-			vf2d_start(640, 480));
+			vf2d_start(800, 600));
+	set->level->block->x = set->gear->size->x / set->level->size->x;
+	set->level->block->y = set->gear->size->y / set->level->size->y;
+	set->map_show = On;
 	cub_function(set);
 }
 

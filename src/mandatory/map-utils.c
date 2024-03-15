@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils-map.c                                        :+:      :+:    :+:   */
+/*   map-utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lumedeir < lumedeir@student.42sp.org.br    +#+  +:+       +#+        */
+/*   By: mister-coder <mister-coder@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 16:34:55 by lumedeir          #+#    #+#             */
-/*   Updated: 2024/03/08 16:38:12 by lumedeir         ###   ########.fr       */
+/*   Updated: 2024/03/14 22:46:06 by mister-code      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,26 @@ t_status	is_character_of_map(char *line)
 		|| !ft_strncmp(line, "F ", 2) || !ft_strncmp(line, "C ", 2))
 		return (On);
 	return (Off);
+}
+
+t_vf2d	player_vector_pos(t_map *set)
+{
+	int		i;
+	int		size;
+	t_vf2d	pos;
+
+	pos = vf2d_start(0, 0);
+	size = set->size->x * set->size->y;
+	i = -1;
+	while (++i < size)
+	{
+		pos.x = i % set->size->x;
+		pos.y = i / set->size->x;
+		if (set->map[(int)pos.y][(int)pos.x] == 'N' || \
+			set->map[(int)pos.y][(int)pos.x] == 'E' || \
+			set->map[(int)pos.y][(int)pos.x] == 'S' || \
+			set->map[(int)pos.y][(int)pos.x] == 'W')
+			return (pos);
+	}
+	return (pos);
 }

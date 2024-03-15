@@ -6,7 +6,7 @@
 /*   By: mister-coder <mister-coder@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 14:03:37 by lde-cast          #+#    #+#             */
-/*   Updated: 2024/03/12 22:36:44 by mister-code      ###   ########.fr       */
+/*   Updated: 2024/03/15 00:07:49 by mister-code      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,22 +37,6 @@ extern int			pixel_to_int(t_pixel *set);
 extern uint32_t		texture_to_int(mlx_texture_t *a, int x, int y);
 extern t_pixel		int_to_pixel(unsigned int color);
 
-typedef struct s_map{
-	char	**map;
-	char	*textures[4];
-	float	fov;
-	int		height;
-	int		width;
-	t_pixel	color[2];
-}	t_map;
-
-extern t_status		get_map(char *map_fd, t_map *map);
-extern int			check_input(int argc, char **argv);
-extern t_status		is_character_of_map(char *line);
-extern void			check_player(t_map *level, int count_player, char c);
-extern char			*texture_breaker(char *texture, char *direction);
-extern t_status		map_validate(t_map *level, char **array);
-
 typedef struct s_chained	t_chained;
 struct s_chained{
 	void		*data;
@@ -65,7 +49,7 @@ extern t_status		chained_next_first(t_chained **head, t_chained *set);
 extern t_status		chained_next_last(t_chained **head, t_chained *set);
 extern void			chained_pop(t_chained **head, void (*pop)(void *data));
 
-extern float		degree_to_rad(float angle);
+extern float		deg_to_rad(float angle);
 
 typedef struct s_vi2d		t_vi2d;
 struct s_vi2d
@@ -96,6 +80,23 @@ struct s_delta_i{
 	t_vi2d	b[1];
 	t_vi2d	e[1];
 };
+
+typedef struct s_map{
+	char	**map;
+	char	*textures[4];
+	float	fov;
+	t_vi2d	size[1];
+	t_vf2d	block[1];
+	t_pixel	color[2];
+}	t_map;
+
+extern t_status		get_map(char *map_fd, t_map *map);
+extern int			check_input(int argc, char **argv);
+extern t_status		is_character_of_map(char *line);
+extern void			check_player(t_map *level, int count_player, char c);
+extern char			*texture_breaker(char *texture, char *direction);
+extern t_status		map_validate(t_map *level, char **array);
+extern t_vf2d		player_vector_pos(t_map *set);
 
 typedef enum e_mouse_status
 {
@@ -178,6 +179,7 @@ struct s_cub3d
 {
 	t_machine	gear[1];
 	t_map		level[1];
+	t_status	map_show;
 	void		(*init)(t_cub3d *set, void *data);
 	t_vi2d		*(*mouse_pos)();
 	char		(*mouse_press)(t_mouse_status button);
@@ -205,11 +207,15 @@ extern void			cub_run(t_cub3d *set, void *data);
 extern void			cub_pop(t_cub3d *set);
 
 // math
-extern int			calculate_rx(float px, int blocksize);
+extern float	limit(int begin, int size, float edge);
+extern t_vf2d	vector_pos(t_vf2d *pos);
+extern float	pythag(t_vf2d *set);
 
 // angle function
+extern t_vf2d		inc_get(t_vf2d b, t_vf2d e, int *step);
 extern t_vf2d		line_angle_end(t_vf2d begin, t_vf2d vel);
 extern t_vf2d		line_angle_get(float *angle, t_vf2d size);
+extern float		angle_limit(float angle);
 
 // plugin function
 extern void			mlx_event_start(t_machine *set);
@@ -219,7 +225,9 @@ extern void			mlx_texture_draw(t_image *s, t_vi2d pos, t_vf2d	zoom);
 extern void			mlx_draw_line(t_image *s, t_vf2d b, t_vf2d e, int color);
 extern void			mlx_draw_rect(t_image *s, t_vf2d b, t_vf2d e, int color);
 extern void			mlx_draw_fill_rect(t_image *s, t_vf2d b, t_vf2d sz, int c);
-extern void			ray_cast(t_object *o, t_image *i, t_vf2d s, char *m);
+extern void			ray_cast(t_object *o, t_image *i);
+extern t_vf2d		ray_vertical(t_object *obj, t_vf2d *dest, float angle);
+extern t_vf2d		ray_horizontal(t_object *obj, t_vf2d *dist, float angle);
 
 // user function
 extern void			user_init(t_cub3d *set, void *data);

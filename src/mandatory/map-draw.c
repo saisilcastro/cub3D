@@ -6,34 +6,22 @@
 /*   By: mister-coder <mister-coder@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 16:11:34 by lde-cast          #+#    #+#             */
-/*   Updated: 2024/03/12 22:52:07 by mister-code      ###   ########.fr       */
+/*   Updated: 2024/03/14 02:14:19 by mister-code      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3d.h>
 
 static inline void	minimap(t_cub3d *set);
-static inline void	floor_ceil_draw(t_cub3d *set);
+static inline void	player_draw(t_cub3d *set, int half);
 
 void	map_draw(t_cub3d *set)
 {
-	floor_ceil_draw(set);
-}
-
-static inline void	floor_ceil_draw(t_cub3d *set)
-{
-	t_vf2d	b;
-	t_vf2d	size;
-	t_image	*img;
-	int		color;
-
-	img = set->gear->map->a;
-	size = vf2d_start(set->gear->size->x, set->gear->size->y * 0.5);
-	mlx_draw_fill_rect(img, vf2d_start(0, 0), size,
-		pixel_to_int(&set->level->color[1]));
-	mlx_draw_fill_rect(img, vf2d_start(0, set->gear->size->y * 0.5), size,
-		pixel_to_int(set->level->color));
-	mlx_texture_draw(set->image_search(2), vi2d_start(10, 50), vf2d_start(5, 5));
+	if (set->map_show)
+	{
+		minimap(set);
+		player_draw(set, 4);
+	}
 }
 
 static inline void	minimap(t_cub3d *set)
@@ -45,19 +33,41 @@ static inline void	minimap(t_cub3d *set)
 	int		color;
 
 	i.x = -1;
-	i.y = set->level->width * set->level->height;
+	i.y = set->level->size->x * set->level->size->y;
 	while (++i.x < i.y)
 	{
-		pos.x = i.x % set->level->width;
-		pos.y = i.x / set->level->width;
+		pos.x = i.x % set->level->size->x;
+		pos.y = i.x / set->level->size->x;
 		if (set->level->map[pos.y][pos.x] == '1')
 			color = 0xFFFF0000;
 		else
 			color = 0xFFFFFFFF;
-		b.x = (pos.x * 11) + 1;
-		b.y = (pos.y * 11) + 1;
-		e.x = 11 - 1;
-		e.y = 11 - 1;
+		b.x = (pos.x * (int)set->level->block->x) + 1;
+		b.y = (pos.y * (int)set->level->block->y) + 1;
+		e.x = b.x + set->level->block->x - 1;
+		e.y = b.y + set->level->block->y - 1;
 		mlx_draw_fill_rect(set->gear->map->a, b, e, color);
 	}
+}
+
+static inline void	player_draw(t_cub3d *set, int half)
+{
+	t_object	*player;
+	t_image		*img;
+	t_vf2d		b;
+	t_vf2d		e;
+	int			i;
+
+	img = set->gear->map->a;
+	player = set->object_search(0);
+	b = vf2d_start(player->pos->x - half, player->pos->y - half);
+	e = vf2d_start(player->pos->x + half, player->pos->y + half);
+	mlx_draw_fill_rect(img, b, e, 0xFF0000FF);
+	i = -1;
+	while (++ i < 5)
+	{
+		b = vf2d_start(player->pos->x - (half * 0.5) + i, player->pos->y);
+		e = object_angle_end(player, b, vf2d_start(15, 15));
+		mlx_draw_line(img, b, e, 0xFFAAAA00);
+	}	
 }

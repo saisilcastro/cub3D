@@ -3,24 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   mlx-plugin-rect.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mister-coder <mister-coder@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/25 22:04:55 by mister-code       #+#    #+#             */
-/*   Updated: 2024/03/11 15:35:41 by lde-cast         ###   ########.fr       */
+/*   Updated: 2024/03/13 16:14:29 by mister-code      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3d.h>
 
-void	mlx_draw_fill_rect(t_image *set, t_vf2d b, t_vf2d size, int color)
+void	mlx_draw_fill_rect(t_image *set, t_vf2d b, t_vf2d e, int color)
 {
-	int	i;
-	int	max;
+	int		i;
+	int		max;
+	t_vi2d	size;
 
 	i = -1;
+	size = vi2d_start(e.x - b.x, e.y - b.y);
 	max = size.x * size.y;
 	while (++i < max)
-		draw_pixel(set, b.x + (i % (int)size.x), b.y
+		draw_pixel(set, b.x + (i % size.x), b.y
 			+ (i / size.x), color);
 }
 

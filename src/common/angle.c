@@ -6,7 +6,7 @@
 /*   By: mister-coder <mister-coder@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/26 15:51:04 by mister-code       #+#    #+#             */
-/*   Updated: 2024/02/29 07:08:35 by mister-code      ###   ########.fr       */
+/*   Updated: 2024/03/14 05:21:25 by mister-code      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ t_vf2d	line_angle_get(float *angle, t_vf2d size)
 		*angle += 360;
 	else if (*angle > 359)
 		*angle -= 360;
-	delta.x = cos(degree_to_rad(*angle)) * size.x;
-	delta.y = -sin(degree_to_rad(*angle)) * size.y;
+	delta.x = cos(deg_to_rad(*angle)) * size.x;
+	delta.y = -sin(deg_to_rad(*angle)) * size.y;
 	return (delta);
 }
 

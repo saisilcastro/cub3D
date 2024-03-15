@@ -6,7 +6,7 @@
 /*   By: mister-coder <mister-coder@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 23:52:33 by mister-code       #+#    #+#             */
-/*   Updated: 2024/02/29 00:01:37 by mister-code      ###   ########.fr       */
+/*   Updated: 2024/03/14 02:06:18 by mister-code      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,13 @@
 
 t_chained	*cub_object_push(int id, char *name, t_vf2d pos, t_image *img)
 {
-	return (chained_push(object_push(id, name, pos, img)));
+	t_object	*obj;
+
+	obj = object_push(id, name, pos, img);
+	if (obj)
+		obj->angle = cub_get()->level->fov;
+	object_angle_limit(obj, vf2d_start(1, 1));
+	return (chained_push(obj));
 }
 
 char	object_next_first(t_chained *object)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   object.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mister-coder <mister-coder@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 15:44:38 by lde-cast          #+#    #+#             */
-/*   Updated: 2024/03/11 15:33:07 by lde-cast         ###   ########.fr       */
+/*   Updated: 2024/03/14 05:22:20 by mister-code      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ t_object	object_start(int id, char *name, t_vf2d pos, t_image *image)
 	set.a = image;
 	*(set.pos) = *(set.route) = pos;
 	set.angle = 270;
-	set.vel->x = cos(degree_to_rad(set.angle));
-	set.vel->y = sin(degree_to_rad(set.angle));
+	set.vel->x = cos(deg_to_rad(set.angle));
+	set.vel->y = -sin(deg_to_rad(set.angle));
 	if (!set.a)
 		*(set.size) = vf2d_start(16, 16);
 	*(set.zoom) = vf2d_start(1, 1);
@@ -42,8 +42,8 @@ t_object	*object_push(int id, char *name, t_vf2d pos, t_image *image)
 	set->a = image;
 	*(set->pos) = *(set->size) = pos;
 	set->angle = 270;
-	set->vel->x = cos(degree_to_rad(set->angle));
-	set->vel->y = sin(degree_to_rad(set->angle));
+	set->vel->x = cos(deg_to_rad(set->angle));
+	set->vel->y = -sin(deg_to_rad(set->angle));
 	if (!set->a)
 		*(set->size) = vf2d_start(16, 16);
 	*(set->zoom) = vf2d_start(1, 1);

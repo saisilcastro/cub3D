@@ -1,0 +1,149 @@
+#include <cub3d.h>
+
+void draw_tex_wall(t_object *obj, int draw_start, int draw_end, mlx_texture_t *texture)
+{
+    t_map *level = cub_get()->level;
+    t_vf2d ray_dir;
+    t_vi2d map;
+
+    // Calculate ray direction and initial position
+    float camera_x = 2 * obj->pos->x / (float)cub_get()->gear->size->x - 1;
+    ray_dir.x = obj->route->x + obj->vel->x * camera_x;
+    ray_dir.y = obj->route->y + obj->vel->y * camera_x;
+
+    // Calculate texture coordinates
+    float wall_x;
+    if (ray_dir.y == 0)
+        wall_x = obj->pos->y + obj->vel->y * ray_dir.x / obj->vel->x;
+    else
+        wall_x = obj->pos->x + obj->vel->x * ray_dir.y / obj->vel->y;
+    wall_x -= floor(wall_x);
+    int tex_x = (int)(wall_x * texture->width);
+
+    // Calculate height of line to draw on screen
+    int line_height = draw_end - draw_start;
+
+    // Calculate texture step and initial texture position
+    float step = (float)texture->height / line_height;
+    float tex_pos = (draw_start - cub_get()->gear->size->y / 2 + line_height / 2) * step;
+
+    // Draw the textured wall
+    for (int y = draw_start; y < draw_end; y++)
+    {
+        int tex_y = (int)tex_pos;
+        if (tex_y >= texture->height)
+            tex_y = texture->height - 1;
+        tex_pos += step;
+        uint32_t color = texture_to_int(texture, tex_x, tex_y);
+        draw_pixel(cub_get()->gear->map->a, obj->pos->x, y, color); // Changed obj->pos->y to y
+    }
+}
+
+void draw_center_vertical_line(t_object *obj, mlx_texture_t *texture)
+{
+    t_map *level = cub_get()->level;
+    t_vf2d ray_dir;
+
+    // Calculate ray direction and initial position
+    float camera_x = 2 * obj->pos->x / (float)cub_get()->gear->size->x - 1;
+    ray_dir.x = obj->route->x + obj->vel->x * camera_x;
+    ray_dir.y = obj->route->y + obj->vel->y * camera_x;
+
+    // Calculate the perpendicular wall distance
+    float perp_wall_dist;
+    if (ray_dir.y == 0)
+        perp_wall_dist = fabs((obj->pos->x - (int)obj->pos->x + (1 - (ray_dir.x < 0 ? -1 : 0)) / 2) / ray_dir.x);
+    else
+        perp_wall_dist = fabs((obj->pos->y - (int)obj->pos->y + (1 - (ray_dir.y < 0 ? -1 : 0)) / 2) / ray_dir.y);
+
+    // Calculate lowest and highest pixel to fill in current stripe
+    int draw_start = (cub_get()->gear->size->y - perp_wall_dist) / 2;
+    if (draw_start < 0)
+        draw_start = 0;
+    int draw_end = (cub_get()->gear->size->y + perp_wall_dist) / 2;
+    if (draw_end >= cub_get()->gear->size->y)
+        draw_end = cub_get()->gear->size->y - 1;
+
+    // Draw the textured wall
+    draw_tex_wall(obj, draw_start, draw_end, texture);
+}
+
+void perform_dda(t_object *obj, t_vf2d *ray_dir, t_vi2d *map, t_vf2d *side_dist, t_vf2d *delta_dist, float *perp_wall_dist, int *step_x, int *step_y, int *hit)
+{
+    while (!(*hit))
+    {
+        if (side_dist->x < side_dist->y)
+        {
+            side_dist->x += delta_dist->x;
+            map->x += *step_x;
+            *perp_wall_dist = (map->x - obj->pos->x + (1 - *step_x) / 2) / ray_dir->x;
+        }
+        else
+        {
+            side_dist->y += delta_dist->y;
+            map->y += *step_y;
+            *perp_wall_dist = (map->y - obj->pos->y + (1 - *step_y) / 2) / ray_dir->y;
+        }
+
+        if (map->x >= 0 && map->y >= 0 && map->x < cub_get()->level->size->x && map->y < cub_get()->level->size->y &&
+            cub_get()->level->map[map->y][map->x] == '1')
+            *hit = 1;
+    }
+}
+
+void ray_cast(t_object *obj, t_image *img)
+{
+    t_map *level = cub_get()->level;
+
+    for (int x = 0; x < cub_get()->gear->size->x; x++)
+    {
+        float camera_x = 2 * x / (float)cub_get()->gear->size->x - 1;
+        t_vf2d ray_dir = {obj->route->x + obj->vel->x * camera_x, obj->route->y + obj->vel->y * camera_x};
+
+        t_vf2d normalized_pos = {obj->pos->x / level->block->x, obj->pos->y / level->block->y};
+        t_vi2d map = {(int)normalized_pos.x, (int)normalized_pos.y};
+
+        t_vf2d side_dist;
+        t_vf2d delta_dist = {fabs(1 / ray_dir.x), fabs(1 / ray_dir.y)};
+        float perp_wall_dist;
+        int step_x, step_y;
+        int hit = 0;
+
+        // Calculate step and initial side_dist
+        if (ray_dir.x < 0)
+        {
+            step_x = -1;
+            side_dist.x = (normalized_pos.x - map.x) * delta_dist.x;
+        }
+        else
+        {
+            step_x = 1;
+            side_dist.x = (map.x + 1.0 - normalized_pos.x) * delta_dist.x;
+        }
+        if (ray_dir.y < 0)
+        {
+            step_y = -1;
+            side_dist.y = (normalized_pos.y - map.y) * delta_dist.y;
+        }
+        else
+        {
+            step_y = 1;
+            side_dist.y = (map.y + 1.0 - normalized_pos.y) * delta_dist.y;
+        }
+
+        // Perform DDA
+        perform_dda(obj, &ray_dir, &map, &side_dist, &delta_dist, &perp_wall_dist, &step_x, &step_y, &hit);
+
+        // Calculate draw_start and draw_end
+        int line_height = (int)(cub_get()->gear->size->y / perp_wall_dist);
+        int draw_start = (cub_get()->gear->size->y - line_height) / 2;
+        if (draw_start < 0)
+            draw_start = 0;
+        int draw_end = (cub_get()->gear->size->y + line_height) / 2;
+        if (draw_end >= cub_get()->gear->size->y)
+            draw_end = cub_get()->gear->size->y - 1;
+
+        // Draw the wall with textures
+        draw_center_vertical_line(obj, cub_get()->image_search(1)->texture);
+    }
+}

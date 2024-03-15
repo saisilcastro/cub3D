@@ -6,7 +6,7 @@
 /*   By: mister-coder <mister-coder@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 17:31:05 by lumedeir          #+#    #+#             */
-/*   Updated: 2024/03/12 22:46:04 by mister-code      ###   ########.fr       */
+/*   Updated: 2024/03/13 18:45:25 by mister-code      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ inline static t_status	get_map_size(t_map *level)
 	while (level->map[++i])
 	{
 		line = ft_strtrim(level->map[i], "\n");
-		if (ft_strlen(line) > level->width)
-			level->width = ft_strlen(line);
+		if (ft_strlen(line) > level->size->x)
+			level->size->x = ft_strlen(line);
 		free(line);
-		level->height++;
+		level->size->y++;
 	}
 	return (On);
 }
