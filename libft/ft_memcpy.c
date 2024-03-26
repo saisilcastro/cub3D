@@ -1,37 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   image.c                                            :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/21 20:22:39 by mister-code       #+#    #+#             */
-/*   Updated: 2024/03/25 12:25:34 by lde-cast         ###   ########.fr       */
+/*   Created: 2023/04/24 16:32:33 by lde-cast          #+#    #+#             */
+/*   Updated: 2023/04/30 14:42:32 by lde-cast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <cub3d.h>
+#include "libft.h"
 
-t_image	*image_push(int id, void *img, void *tex)
+void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
-	t_image	*graph;
+	unsigned char	*c_src;
+	unsigned char	*c_dest;
 
-	graph = (t_image *)malloc(sizeof(t_image));
-	if (!graph)
-		return (NULL);
-	graph->img = img;
-	graph->tex = tex;
-	return (graph);
-}
-
-void	image_pop(void *data)
-{
-	t_image	*set;
-
-	set = data;
-	if (set->img)
-		mlx_delete_image(cub_get()->mlx, set->img);
-	if (set->tex)
-		mlx_delete_texture(set->tex);
-	free(set);
+	c_src = (unsigned char *)src;
+	c_dest = (unsigned char *)dest;
+	while (n--)
+		*c_dest++ = *c_src++;
+	return (dest);
 }

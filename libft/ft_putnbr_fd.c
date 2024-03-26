@@ -1,37 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   image.c                                            :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/21 20:22:39 by mister-code       #+#    #+#             */
-/*   Updated: 2024/03/25 12:25:34 by lde-cast         ###   ########.fr       */
+/*   Created: 2023/04/24 17:20:49 by lde-cast          #+#    #+#             */
+/*   Updated: 2023/04/29 15:13:53 by lde-cast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <cub3d.h>
+#include "libft.h"
 
-t_image	*image_push(int id, void *img, void *tex)
+void	ft_putnbr_fd(int n, int fd)
 {
-	t_image	*graph;
+	char	multiply;
+	char	number;
 
-	graph = (t_image *)malloc(sizeof(t_image));
-	if (!graph)
-		return (NULL);
-	graph->img = img;
-	graph->tex = tex;
-	return (graph);
-}
-
-void	image_pop(void *data)
-{
-	t_image	*set;
-
-	set = data;
-	if (set->img)
-		mlx_delete_image(cub_get()->mlx, set->img);
-	if (set->tex)
-		mlx_delete_texture(set->tex);
-	free(set);
+	multiply = 1;
+	if (n > -10 && n < 0)
+		write(fd, "-", 1);
+	while (n <= -10 || n >= 10)
+	{
+		ft_putnbr_fd(n / 10, fd);
+		n %= 10;
+	}
+	if (n < 0)
+		multiply = -1;
+	number = (n * multiply) + 48;
+	write(fd, &number, 1);
 }

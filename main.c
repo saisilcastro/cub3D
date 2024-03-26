@@ -3,27 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mister-coder <mister-coder@student.42.f    +#+  +:+       +#+        */
+/*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/27 14:00:12 by lde-cast          #+#    #+#             */
-/*   Updated: 2024/03/03 16:06:53 by mister-code      ###   ########.fr       */
+/*   Created: 2024/03/25 12:36:39 by lde-cast          #+#    #+#             */
+/*   Updated: 2024/03/25 12:36:52 by lde-cast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3d.h>
 
+t_vi2d	line_v(t_game *game, double wall_dist, int pitch)
+{
+	int		line_height;
+	t_vi2d	line;
+
+	line_height = game->size->y / wall_dist;
+	line.x = ((game->size->y - line_height) * 0.5) + pitch;
+	line.y = line.x + line_height;
+	if (line.x < 0)
+		line.x = 0;
+	if (line.y >= game->size->y)
+		line.y = game->size->y - 1;
+	return (line);
+}
+
 int	main(int argc, char **argv)
 {
-	t_cub3d	*cub;
+	t_game	*cub;
 
-	if (argc == 2)
+	if (check_input(argc, argv))
 	{
 		cub = cub_get();
-		cub_set(cub, argv[1]);
-		cub->init = user_init;
-		cub->update = user_update;
-		cub->draw = user_draw;
-		cub->run(cub, NULL);
+		if (get_map(argv[1], cub->level))
+			cub->status |= 1 << MACHINE_RUNNING;
+		game_start(cub);
+		game_pop(cub);
 	}
 	return (0);
 }

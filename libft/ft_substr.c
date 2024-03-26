@@ -1,37 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   image.c                                            :+:      :+:    :+:   */
+/*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/21 20:22:39 by mister-code       #+#    #+#             */
-/*   Updated: 2024/03/25 12:25:34 by lde-cast         ###   ########.fr       */
+/*   Created: 2023/04/27 11:58:46 by lde-cast          #+#    #+#             */
+/*   Updated: 2023/04/30 22:05:19 by lde-cast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <cub3d.h>
+#include "libft.h"
 
-t_image	*image_push(int id, void *img, void *tex)
+char	*ft_substr(char const *s, size_t start, size_t len)
 {
-	t_image	*graph;
+	size_t	s_len;
+	char	*sub;
 
-	graph = (t_image *)malloc(sizeof(t_image));
-	if (!graph)
+	s_len = ft_strlen(s);
+	if (!s || start >= s_len)
+	{
+		sub = (char *)malloc(1);
+		*(sub + 0) = '\0';
+		return (sub);
+	}		
+	if (start + len > s_len)
+		len = s_len - start;
+	sub = (char *)malloc(len + 1);
+	if (!sub)
 		return (NULL);
-	graph->img = img;
-	graph->tex = tex;
-	return (graph);
-}
-
-void	image_pop(void *data)
-{
-	t_image	*set;
-
-	set = data;
-	if (set->img)
-		mlx_delete_image(cub_get()->mlx, set->img);
-	if (set->tex)
-		mlx_delete_texture(set->tex);
-	free(set);
+	ft_memcpy(sub, s + start, len);
+	*(sub + len) = '\0';
+	return (sub);
 }

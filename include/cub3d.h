@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/27 14:03:37 by lde-cast          #+#    #+#             */
-/*   Updated: 2024/03/04 12:18:33 by lde-cast         ###   ########.fr       */
+/*   Created: 2024/03/18 23:05:45 by mister-code       #+#    #+#             */
+/*   Updated: 2024/03/25 16:08:13 by lde-cast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,172 +14,177 @@
 # define CUB3D_H
 
 # include <MLX42/MLX42.h>
-# include <unistd.h>
+# include <GLFW/glfw3.h>
 # include <math.h>
-# include <stdio.h>
-# include <string.h>
 # include <stdlib.h>
+# include <libft.h>
+# include <unistd.h>
+# include <fcntl.h>
+# include <stdio.h>
+
+typedef struct s_game	t_game;
 
 typedef enum e_status{
 	Off,
 	On
 }t_status;
 
-typedef struct s_chained	t_chained;
-struct s_chained{
-	void		*data;
-	t_chained	*prev;
-	t_chained	*next;
-};
+typedef struct s_pixel{
+	uint8_t	r;
+	uint8_t	g;
+	uint8_t	b;
+	uint8_t	a;
+}t_pixel;
 
-extern t_chained	*chained_push(void *data);
-extern t_status		chained_next_first(t_chained **head, t_chained *set);
-extern t_status		chained_next_last(t_chained **head, t_chained *set);
-extern void			chained_pop(t_chained **head, void (*pop)(void *data));
-
-extern float		degree_to_rad(float angle);
-
-typedef struct s_vi2d		t_vi2d;
-struct s_vi2d
-{
+typedef struct s_vi2d{
 	int	x;
 	int	y;
+}t_vi2d;
+
+extern t_vi2d	vi2d_start(int x, int y);
+extern int		vi2d_limit(t_vi2d *set, t_vi2d b, t_vi2d e);
+extern void		vi2d_show(t_vi2d *set, char *x, char *y);
+
+typedef struct s_vd2d	t_vd2d;
+struct s_vd2d{
+	double	x;
+	double	y;
 };
 
-extern t_vi2d		vi2d_start(int x, int y);
+extern t_vd2d	vd2d_start(double x, double y);
+extern void		vd2d_rotate(t_vd2d *pos, double rotation);
+extern int		vd2d_limit(t_vd2d *set, t_vd2d b, t_vd2d e);
+extern void		vd2d_show(t_vd2d *set, char *x, char *y);
+extern t_vd2d	screen_size(void);
 
-typedef struct s_vf2d		t_vf2d;
-struct s_vf2d
-{
-	float	x;
-	float	y;
-};
+extern uint32_t	*pixel_set(void *buffer, t_vi2d i, int w, int bpp);
+extern int		pixel_get(void *buffer, t_vi2d p, int w, int bpp);
+extern void		pixel_divider(uint32_t *pixel);
+extern int		pixel_to_int(t_pixel *set);
+extern void		pixel_show(int color);
 
-extern t_vf2d		vf2d_start(float x, float y);
+typedef struct s_map{
+	uint32_t	**map;
+	char		*textures[4];
+	t_vi2d		size[1];
+	t_vd2d		cell[1];
+	t_pixel		color[2];
+}	t_map;
 
-typedef enum e_mouse_status
-{
-	MOUSE_LEFT,
-	MOUSE_MIDDLE,
-	MOUSE_RIGHT
-}t_mouse_status;
+extern t_status	get_map(char *map_fd, t_map *map);
+extern int		check_input(int argc, char **argv);
+extern void		array_pop(char **arr);
+extern char		*texture_breaker(char *texture, char *direction);
+extern t_status	map_validate(t_map *level, char **array);
+extern t_vd2d	player_start_point(t_map *set);
+extern t_status	is_character_of_map(char *line);
+extern t_status	map_solid(int x, int y);
+extern t_status	special_char(char c);
 
-typedef struct s_image		t_image;
-struct s_image
-{
-	int		id;
-	void	*buffer;
-};
+extern float	deg_to_rad(float angle);
 
-extern t_image		*image_push(int id, void *buffer);
-
-enum e_object{
-	OBJECT_PUSH,
-	OBJECT_VISIBLE
-};
-
-typedef struct
-{
-	char	*path[4];
-	int		color[2];
-	char	**buffer;
-}t_map;
-
-extern t_status		map_load(t_map *set, char *path);
-
-typedef struct s_object		t_object;
-struct s_object
-{
+typedef struct s_image{
 	int				id;
-	char			*name;
-	t_vf2d			pos[1];
-	t_vf2d			route[1];
-	t_vf2d			vel[1];
-	t_vf2d			size[1];
-	t_vf2d			zoom[1];
-	float			angle;
-	t_image			*image;
-	unsigned char	status:2;
+	mlx_image_t		*img;
+	mlx_texture_t	*tex;
+}t_image;
+
+extern t_image	*image_push(int id, void *img, void *tex);
+extern void		image_pop(void *data);
+
+typedef struct s_object	t_object;
+struct s_object{
+	t_vd2d	pos[1];
+	t_vd2d	dir[1];
+	t_vd2d	plane[1];
+	double	speed;
+	double	angle;
 };
 
-extern t_object		object_start(int id, char *name, t_vf2d pos, t_image *i);
-extern t_object		*object_push(int id, char *name, t_vf2d pos, t_image *i);
-extern void			object_angle_limit(t_object *set, t_vf2d size);
-extern void			object_pop(void *set);
+extern void		object_rotate(t_object *obj, int clockwise);
+extern void		object_forward(t_object *obj);
+extern void		object_backward(t_object *obj);
+extern void		object_left(t_object *obj);
+extern void		object_right(t_object *obj);
 
-typedef struct s_mouse		t_mouse;
-struct s_mouse{
-	unsigned char	button:3;
-	t_vi2d			pos[1];
+typedef struct s_mouse{
+	t_vd2d		pos[1];
+	unsigned	button: 3;
 	struct{
-		unsigned char	top: 1;
-		unsigned char	left: 1;
+		int	left;
+		int	top;
 	}s_wheel[1];
+	double		horiz;
+}t_mouse;
+
+typedef struct s_caster{
+	t_vi2d	map[1];
+	t_vi2d	step[1];
+	t_vd2d	ray_dir[1];
+	t_vd2d	side_dist[1];
+	t_vd2d	delta_dist[1];
+	double	per_wall_dist;
+	int		line_height;
+	struct{
+		int	begin;
+		int	end;
+	}s_v_draw[1];
+	int		pitch;
+	enum{
+		NO,
+		EA,
+		SO,
+		WE
+	}e_compass;
+}t_caster;
+
+extern void		ray_pos_dir_get(t_game *game, t_object *obj,
+					t_caster *cast, int x);
+extern void		delta_dist_get(t_caster *cast);
+extern void		step_and_side_get(t_vd2d *player, t_caster *cast);
+extern void		dda_get(t_caster *cast);
+extern void		vertical_limit(t_vd2d *screen, t_caster	*cast);
+
+enum{
+	MACHINE_RUNNING,
+	MACHINE_SHOW,
+	MOUSE_MOVE,
+	MINIMAP_SHOW
 };
 
-typedef struct s_machine	t_machine;
-struct s_machine
-{
-	t_vi2d		pos[1];
-	t_vf2d		size[1];
-	char		*title;
+struct s_game{
+	mlx_t		*mlx;
+	t_map		level[1];
+	t_image		screen[1];
+	t_vd2d		size[1];
+	t_object	player[1];
+	t_image		*gf[4];
 	t_mouse		mouse[1];
-	t_status	key[255];
-	t_object	map[1];
-	t_chained	*image;
-	t_chained	*object;
-	void		*plugin;
-	char		(*start)(t_machine *set, t_status resize);
-	void		(*pop)(t_machine *set);
+	unsigned	status:4;
 };
 
-extern void			machine_set(t_machine *set, char *t, t_vi2d p, t_vf2d s);
+// event function
+extern void		event_start(t_game *game);
+extern void		mouse_event_start(t_game *game);
+extern int		mouse_move(t_game *game);
+extern void		object_control(t_game *game, t_object *obj);
 
-typedef struct s_cub3d		t_cub3d;
-struct s_cub3d
-{
-	t_map		area[1];
-	t_machine	gear[1];
-	void		(*init)(t_cub3d *set, void *data);
-	t_vi2d		*(*mouse_pos)(void);
-	char		(*mouse_press)(t_mouse_status button);
-	t_chained	*(*image_create)(int id, t_vf2d size);
-	t_image		*(*image_search)(int id);
-	char		(*image_next_first)(t_chained *set);
-	char		(*image_next_last)(t_chained *set);
-	t_chained	*(*object_push)(int id, char *name, t_vf2d pos, t_image *i);
-	char		(*object_next_first)(t_chained *set);
-	char		(*object_next_last)(t_chained *set);
-	t_object	*(*object_search)(int id);
-	void		(*map_set)(int id);
-	void		(*update)(void *set);
-	void		(*draw)(t_cub3d *set);
-	void		(*show)(void *set);
-	void		(*run)(t_cub3d *set, void *data);
-	void		(*pop)(t_cub3d *set);
-};
+extern t_game	*cub_get(void);
+extern void		game_start(t_game *set);
+extern void		game_pop(t_game *set);
 
-extern t_cub3d		*cub_get(void);
-extern void			cub_set(t_cub3d *set, char *level);
-extern void			cub_run(t_cub3d *set, void *data);
-extern void			cub_pop(t_cub3d *set);
+// draw function
+extern void		draw_pixel(t_vd2d pos, int color, int len);
+extern void		draw_line(t_vd2d b, t_vd2d e, int len, int color);
+extern void		draw_rect_fill(t_vd2d b, t_vd2d e, int lenght, int color);
+extern void		draw_image(t_image *graph, t_vd2d b);
+extern void		draw_texture(t_image *graph, t_vd2d b);
 
-// plugin function
-extern void			mlx_event_start(t_machine *set);
-extern void			draw_pixel(t_image *img, int x, int y, int color);
-extern void			mlx_image_clear(t_image *set, int color);
-extern void			mlx_draw_line(t_image *set, t_vf2d b, t_vf2d e, int color);
-extern void			mlx_draw_rect(t_image *set, t_vf2d b, t_vf2d e, int color);
-extern void			mlx_draw_fill_rect(t_image *set, t_vf2d b, t_vf2d size, int color);
+// ray cast function
+extern void		ray_cast_start(t_game *game, int x);
 
-extern void			ray_cast(t_object *obj, t_image *img, t_vf2d size, char *map);
-
-// angle function
-extern t_vf2d		line_angle_get(float *angle, t_vf2d size);
-extern t_vf2d		line_angle_end(t_vf2d begin, t_vf2d vel);
-// user function
-extern void			user_init(t_cub3d *set, void *data);
-extern void			user_update(void *data);
-extern void			user_draw(t_cub3d *set);
+// minimap function
+extern t_vd2d	cell_get(t_game *game);
+extern void		minimap_draw(t_game *game);
 
 #endif

@@ -1,19 +1,23 @@
 {
-	"files.associations": {
-		"mlx42.h": "c",
-		"object_of.h": "c",
-		"mlx_plugin.h": "c",
-		"object.h": "c",
-		"math.h": "c",
-		"math_of.h": "c",
-		"machine.h": "c",
-		"cmath": "c",
-		"stdlib.h": "c",
-		"cub3d.h": "c",
-		"image_of.h": "c",
-		"struct.h": "c",
-		"level.h": "c",
-		"primitive.h": "c"
-	},
-	"git.ignoreLimitWarning": true
+    "files.associations": {
+        "array": "c",
+        "deque": "c",
+        "string": "c",
+        "unordered_map": "c",
+        "vector": "c",
+        "string_view": "c",
+        "initializer_list": "c",
+        "*.tcc": "c",
+        "memory": "c",
+        "optional": "c",
+        "fstream": "c",
+        "istream": "c",
+        "ostream": "c",
+        "sstream": "c",
+        "streambuf": "c",
+        "functional": "c",
+        "tuple": "c",
+        "cub3d.h": "c",
+        "mlx42.h": "c"
+    }
 }

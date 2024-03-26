@@ -1,37 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   image.c                                            :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/21 20:22:39 by mister-code       #+#    #+#             */
-/*   Updated: 2024/03/25 12:25:34 by lde-cast         ###   ########.fr       */
+/*   Created: 2023/04/24 17:12:32 by lde-cast          #+#    #+#             */
+/*   Updated: 2023/04/29 20:40:35 by lde-cast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <cub3d.h>
+#include "libft.h"
 
-t_image	*image_push(int id, void *img, void *tex)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	t_image	*graph;
+	int		l1;
+	int		l2;
+	int		pos;
+	char	*whole;
 
-	graph = (t_image *)malloc(sizeof(t_image));
-	if (!graph)
+	l1 = ft_strlen(s1);
+	l2 = ft_strlen(s2);
+	whole = malloc((l1 + l2 + 1) * sizeof(char));
+	if (!whole)
 		return (NULL);
-	graph->img = img;
-	graph->tex = tex;
-	return (graph);
-}
-
-void	image_pop(void *data)
-{
-	t_image	*set;
-
-	set = data;
-	if (set->img)
-		mlx_delete_image(cub_get()->mlx, set->img);
-	if (set->tex)
-		mlx_delete_texture(set->tex);
-	free(set);
+	pos = 0;
+	while (*s1)
+	{
+		*(whole + pos) = *s1;
+		s1++;
+		pos++;
+	}
+	while (*s2)
+	{
+		*(whole + pos) = *s2;
+		s2++;
+		pos++;
+	}
+	*(whole + pos) = '\0';
+	return (whole);
 }
