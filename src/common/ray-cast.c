@@ -38,9 +38,11 @@ t_vi2d	texture_x_get(t_game *game, t_caster *cast, t_image *img, double wall_x)
 	t_vi2d	tex;
 
 	tex.x = (int)(wall_x * img->tex->width);
-	if ((cast->e_compass == WE || cast->e_compass == EA) && cast->ray_dir->x > 0)
+	if ((cast->e_compass == WE || cast->e_compass == EA)
+		&& cast->ray_dir->x > 0)
 		tex.x = img->tex->width - tex.x - 1;
-	if ((cast->e_compass == NO || cast->e_compass == SO) && cast->ray_dir->y < 0)
+	if ((cast->e_compass == NO || cast->e_compass == SO)
+		&& cast->ray_dir->y < 0)
 		tex.x = img->tex->width - tex.x - 1;
 	return (tex);
 }

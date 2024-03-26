@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game-bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lumedeir < lumedeir@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 20:08:16 by mister-code       #+#    #+#             */
-/*   Updated: 2024/03/25 14:29:16 by lde-cast         ###   ########.fr       */
+/*   Updated: 2024/03/26 14:04:25 by lumedeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ void	game_start(t_game *game)
 	*(game->player->dir) = vd2d_start(-1, 0);
 	*(game->player->plane) = vd2d_start(0, 0.66);
 	object_rotate(game->player, 1);
-	*(game->size) = vd2d_start(640, 480);
+	*(game->size) = vd2d_start(1920, 1080);
 	*(game->level->cell) = cell_get(game);
-	//mlx_set_setting(MLX_FULLSCREEN, true);
+	mlx_set_setting(MLX_FULLSCREEN, true);
 	game->mlx = mlx_init(game->size->x, game->size->y, "cub3d", false);
 	mlx_set_window_size(game->mlx, game->size->x, game->size->y);
 	mlx_set_window_pos(game->mlx, 250, 50);

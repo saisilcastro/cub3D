@@ -53,7 +53,7 @@ PURPLE = \033[1;35m
 
 all: $(NAME)
 $(NAME): $(SRCOBJ)
-	@printf "\nThe Makefile of [$(PURPLE)libft\033[0m] has been compiled!🐚\n"
+	@printf "\nThe Makefile of [$(PURPLE)libft\033[0m] has been compiled!✨"
 	@ar src $(NAME) $^
 ${OBJ}/%.o: %.c
 	@$(call CREATE,${OBJ})

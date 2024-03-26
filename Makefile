@@ -40,17 +40,17 @@ SRCOBJ = $(SRC_MANDATORY:%.c=${OBJ}/%.o)
 SRCOBJB = $(SRC_BONUS:%.c=${OBJ}/%.o)
 LIB = -L./MLX42/build \
 	  -L./libft
-FLAG = -lmlx42 -ldl -lglfw -pthread -lm -lft
+FLAG = -lmlx42 -ldl -lglfw -pthread -fomit-frame-pointer -finline-functions -g3 -lm -lft
 PURPLE = \033[1;35m
 
 all: $(NAME)
 $(NAME): $(SRCOBJ)
 	@$(MAKE) -C ./libft --silent
-	@printf "\nThe Makefile of [$(PURPLE)Cub3D\033[0m] has been compiled!🐚\n"
+	@printf "\nThe Makefile of [$(PURPLE)Cub3D\033[0m] has been compiled!🤠\n"
 	@$(CC) $^ $(LIB) $(FLAG) -o $(NAME)
 bonus: $(SRCOBJB)
 	@$(MAKE) -C ./libft --silent
-	@printf "\nThe Makefile of [$(PURPLE)Cub3D bonus\033[0m] has been compiled!🐚\n"
+	@printf "The Makefile of [$(PURPLE)Cub3D bonus\033[0m] has been compiled!🤠\n"
 	@$(CC) $^ $(LIB) $(FLAG) -o $(NAME)
 ${OBJ}/%.o : %.c
 	@$(call CREATE,${OBJ})
@@ -58,14 +58,10 @@ ${OBJ}/%.o : %.c
 	@$(CC) -c $< -o $@ $(INCLUDE)
 clean:
 	$(call REMOVE,${OBJ})
-	$(call REMOVE,./libft/*.o)
+	@$(MAKE) clean -C ./libft --silent
 fclean: clean
 	$(call REMOVE,${NAME})
-	$(call REMOVE,./libft/libft.a)
+	@$(MAKE) fclean -C ./libft --silent
 re: fclean all
-play:
-	./$(NAME) map.cub
 leak:
 	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=codam.sup ./$(NAME) map.cub
-fucker:
-	valgrind --leak-check=full -q ./$(NAME) map.cub

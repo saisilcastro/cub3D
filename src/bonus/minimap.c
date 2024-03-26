@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mister-coder <mister-coder@student.42.f    +#+  +:+       +#+        */
+/*   By: lumedeir < lumedeir@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 21:03:52 by mister-code       #+#    #+#             */
-/*   Updated: 2024/03/25 23:08:05 by mister-code      ###   ########.fr       */
+/*   Updated: 2024/03/26 14:03:58 by lumedeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ void	minimap_draw(t_game *game)
 		p.x = -1;
 		while (++p.x < game->level->size->x)
 		{
-			if (game->level->map && game->level->map[p.y] && game->level->map[p.y][p.x] > 0)
+			if (game->level->map && game->level->map[p.y] && \
+			game->level->map[p.y][p.x] > 0)
 			{
 				b = vd2d_start((cell.x * p.x), (cell.y * p.y));
 				e = vd2d_start(b.x + cell.x, b.y + cell.y);

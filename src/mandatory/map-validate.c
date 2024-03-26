@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map-validate.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lumedeir < lumedeir@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 12:34:54 by lde-cast          #+#    #+#             */
-/*   Updated: 2024/03/25 16:42:59 by lde-cast         ###   ########.fr       */
+/*   Updated: 2024/03/26 13:27:57 by lumedeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ inline static t_status	character_validade(t_map *level, char
 
 	i = -1;
 	j = 0;
-	if (count_player != 1)
-		return (printf("Invalid number of players\n"), Off);
 	while (map[j])
 	{
 		while (map[j][++i])
@@ -32,6 +30,8 @@ inline static t_status	character_validade(t_map *level, char
 		i = -1;
 		j++;
 	}
+	if (count_player != 1)
+		return (printf("Invalid number of players\n"), Off);
 	return (On);
 }
 

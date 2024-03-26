@@ -1,7 +1,7 @@
-NO ./img/texture/fern_north.png
-EA ./img/texture/fern_east.png
-SO ./img/texture/fern_south.png
-WE ./img/texture/fern_west.png
+NO ./maps/texture/fern_north.png
+EA ./maps/texture/fern_east.png
+SO ./maps/texture/fern_south.png
+WE ./maps/texture/fern_west.png
 F 220,100,0
 C 225,30,0
 1111111111111111111111111
