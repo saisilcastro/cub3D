@@ -83,7 +83,7 @@ static inline void	game_draw(void *set)
 	game = set;
 	ray_cast_start(set, -1);
 	if (game->status & 1 << MINIMAP_SHOW)
-		minimap_draw(set);
+		minimap_run(set);
 	game->status |= 1 << MACHINE_SHOW;
 }
 

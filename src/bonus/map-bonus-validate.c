@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   map-bonus-validate.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lumedeir < lumedeir@student.42sp.org.br    +#+  +:+       +#+        */
+/*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 12:19:23 by lde-cast          #+#    #+#             */
-/*   Updated: 2024/03/26 14:09:03 by lumedeir         ###   ########.fr       */
+/*   Updated: 2024/03/26 17:07:53 by lde-cast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <cub3d.h>
 
-inline static t_status	char_ok(t_map *level,
+inline static t_status	character_validade(t_map *level,
 	char **map, int count_player)
 {
 	int	i;
@@ -35,7 +35,7 @@ inline static t_status	char_ok(t_map *level,
 	return (On);
 }
 
-inline static t_status	param_ok(t_map *map)
+inline static t_status	parameters_validate(t_map *map)
 {
 	int	i;
 
@@ -51,7 +51,7 @@ inline static t_status	param_ok(t_map *map)
 	return (On);
 }
 
-inline static t_status	invalid_walls(char **map)
+inline static t_status	has_invalid_walls(char **map)
 {
 	int	l_index;
 	int	c_index;
@@ -106,31 +106,31 @@ inline static int	swap_char(t_game *game, char *swap, int j)
 	return (0);
 }
 
-t_status	map_validate(t_map *lv, char **arr)
+t_status	map_validate(t_map *lv, char **array)
 {
-	t_vi2d	p;
-	int		cp;
+	int	i;
+	int	j;
+	int	count_player;
 
-	p.y = -1;
-	cp = 0;
+	j = -1;
+	count_player = 0;
 	lv->map = ft_calloc(lv->size->y + 1, sizeof(uint32_t *));
-	while (arr[++p.y])
+	while (array[++j])
 	{
-		lv->map[p.y] = ft_calloc(lv->size->x, sizeof(uint32_t));
-		p.x = -1;
-		while (++p.x < lv->size->x)
-			lv->map[p.y][p.x] = -1;
-		p.x = -1;
-		while (arr[p.y][++p.x])
+		lv->map[j] = ft_calloc(lv->size->x, sizeof(uint32_t));
+		ft_memset(lv->map[j], -1, lv->size->x * sizeof(uint32_t));
+		i = -1;
+		while (array[j][++i])
 		{
-			if (special_char(arr[p.y][p.x]))
-					cp += swap_char(cub_get(), arr[p.y], p.y);
-			if (ft_isdigit(arr[p.y][p.x]))
-				lv->map[p.y][p.x] = arr[p.y][p.x] - 0x30;
+			if (special_char(array[j][i]))
+					count_player += swap_char(cub_get(), array[j], j);
+			if (ft_isdigit(array[j][i]))
+				lv->map[j][lv->size->x - i - 1] = array[j][i] - 0x30;
 		}
 	}
-	lv->map[p.y] = NULL;
-	if (!param_ok(lv) || !char_ok(lv, arr, cp) || !invalid_walls(arr))
+	lv->map[j] = NULL;
+	if (!parameters_validate(lv) || !character_validade(lv, array, count_player)
+		|| !has_invalid_walls(array))
 		return (Off);
 	return (On);
 }

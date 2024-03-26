@@ -21,6 +21,7 @@ SRC_COMMON = 	draw.c \
 SRC_BASE =	event.c \
 			game.c \
 			map-utils.c \
+			map-utils2.c \
 			map-validate.c \
 			map.c
 SRC_EXTRA =	event-bonus.c \
@@ -64,4 +65,4 @@ fclean: clean
 	@$(MAKE) fclean -C ./libft --silent
 re: fclean all
 leak:
-	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=codam.sup ./$(NAME) map.cub
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=codam.sup ./$(NAME) maps/map.cub

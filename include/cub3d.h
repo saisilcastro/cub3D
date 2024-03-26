@@ -6,7 +6,7 @@
 /*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 23:05:45 by mister-code       #+#    #+#             */
-/*   Updated: 2024/03/25 16:08:13 by lde-cast         ###   ########.fr       */
+/*   Updated: 2024/03/26 17:27:58 by lde-cast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ extern t_vd2d	player_start_point(t_map *set);
 extern t_status	is_character_of_map(char *line);
 extern t_status	map_solid(int x, int y);
 extern t_status	special_char(char c);
+extern void		map_swap(t_map **lv);
 
 extern float	deg_to_rad(float angle);
 
@@ -185,6 +186,6 @@ extern void		ray_cast_start(t_game *game, int x);
 
 // minimap function
 extern t_vd2d	cell_get(t_game *game);
-extern void		minimap_draw(t_game *game);
+extern void		minimap_run(t_game *game);
 
 #endif

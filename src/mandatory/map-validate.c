@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map-validate.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lumedeir < lumedeir@student.42sp.org.br    +#+  +:+       +#+        */
+/*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 12:34:54 by lde-cast          #+#    #+#             */
-/*   Updated: 2024/03/26 13:27:57 by lumedeir         ###   ########.fr       */
+/*   Updated: 2024/03/26 16:55:00 by lde-cast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,18 +114,18 @@ t_status	map_validate(t_map *lv, char **array)
 
 	j = -1;
 	count_player = 0;
-	lv->map = (unsigned int **)malloc((lv->size->y + 1)
-			* sizeof(unsigned int *));
+	lv->map = ft_calloc(lv->size->y + 1, sizeof(uint32_t *));
 	while (array[++j])
 	{
+		lv->map[j] = ft_calloc(lv->size->x, sizeof(uint32_t));
+		ft_memset(lv->map[j], -1, lv->size->x * sizeof(uint32_t));
 		i = -1;
-		lv->map[j] = (unsigned int *)malloc(lv->size->x * sizeof(unsigned int));
-		ft_memset(lv->map[j], -1, lv->size->x);
 		while (array[j][++i])
 		{
 			if (special_char(array[j][i]))
 					count_player += swap_char(cub_get(), array[j], j);
-			lv->map[j][i] = array[j][i] - 0x30;
+			if (ft_isdigit(array[j][i]))
+				lv->map[j][lv->size->x - i - 1] = array[j][i] - 0x30;
 		}
 	}
 	lv->map[j] = NULL;
