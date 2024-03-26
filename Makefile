@@ -50,7 +50,7 @@ $(NAME): $(SRCOBJ)
 	@$(CC) $^ $(LIB) $(FLAG) -o $(NAME)
 bonus: $(SRCOBJB)
 	@$(MAKE) -C ./libft --silent
-	@printf "The Makefile of [$(PURPLE)Cub3D bonus\033[0m] has been compiled!🤠\n"
+	@printf "\nThe Makefile of [$(PURPLE)Cub3D bonus\033[0m] has been compiled!🤠\n"
 	@$(CC) $^ $(LIB) $(FLAG) -o $(NAME)
 ${OBJ}/%.o : %.c
 	@$(call CREATE,${OBJ})
