@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map-validate.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lumedeir < lumedeir@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 12:34:54 by lde-cast          #+#    #+#             */
-/*   Updated: 2024/03/26 16:55:00 by lde-cast         ###   ########.fr       */
+/*   Updated: 2024/03/29 10:06:08 by lumedeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ t_status	map_validate(t_map *lv, char **array)
 	}
 	lv->map[j] = NULL;
 	if (!parameters_validate(lv) || !character_validade(lv, array, count_player)
-		|| !has_invalid_walls(array))
+		|| !has_invalid_walls(array) || !image_validate(lv))
 		return (Off);
 	return (On);
 }

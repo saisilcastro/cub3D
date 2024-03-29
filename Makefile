@@ -35,6 +35,7 @@ SRC_MANDATORY =	$(SRC_COMMON) \
 				main.c
 SRC_BONUS =	$(SRC_COMMON) \
 			$(SRC_EXTRA)\
+			map-utils2.c \
 			main.c
 OBJ = obj
 SRCOBJ = $(SRC_MANDATORY:%.c=${OBJ}/%.o)
@@ -65,4 +66,4 @@ fclean: clean
 	@$(MAKE) fclean -C ./libft --silent
 re: fclean all
 leak:
-	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=codam.sup ./$(NAME) maps/map.cub
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=codam.sup ./$(NAME) maps/map1.cub

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lumedeir < lumedeir@student.42sp.org.br    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 23:05:45 by mister-code       #+#    #+#             */
-/*   Updated: 2024/03/26 17:27:58 by lde-cast         ###   ########.fr       */
+/*   Updated: 2024/03/29 10:11:26 by lumedeir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ extern t_status	is_character_of_map(char *line);
 extern t_status	map_solid(int x, int y);
 extern t_status	special_char(char c);
 extern void		map_swap(t_map **lv);
+extern t_status	image_validate(t_map *level);
 
 extern float	deg_to_rad(float angle);
 
