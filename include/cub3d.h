@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lumedeir < lumedeir@student.42sp.org.br    +#+  +:+       +#+        */
+/*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 23:05:45 by mister-code       #+#    #+#             */
-/*   Updated: 2024/03/29 10:11:26 by lumedeir         ###   ########.fr       */
+/*   Updated: 2024/03/29 14:48:30 by lde-cast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,6 @@ typedef struct s_mouse{
 		int	left;
 		int	top;
 	}s_wheel[1];
-	double		horiz;
 }t_mouse;
 
 typedef struct s_caster{

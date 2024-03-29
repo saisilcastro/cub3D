@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector-vd2d.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lumedeir < lumedeir@student.42sp.org.br    +#+  +:+       +#+        */
+/*   By: mister-coder <mister-coder@student.42.f    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 23:27:25 by lde-cast          #+#    #+#             */
-/*   Updated: 2024/03/26 14:03:06 by lumedeir         ###   ########.fr       */
+/*   Updated: 2024/03/27 00:50:43 by mister-code      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,10 @@ void	vd2d_rotate(t_vd2d *pos, double rotation)
 	double	x;
 	double	y;
 
+	if (rotation < 0)
+		rotation += 2 * M_PI;
+	if (rotation > 2 * M_PI)
+		rotation -= 2 * M_PI;
 	old_x = pos->x;
 	x = pos->x * cos(rotation) - pos->y * sin(rotation);
 	if (map_solid(x, pos->y))

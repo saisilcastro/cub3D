@@ -6,7 +6,7 @@
 /*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 00:47:23 by mister-code       #+#    #+#             */
-/*   Updated: 2024/03/25 13:24:21 by lde-cast         ###   ########.fr       */
+/*   Updated: 2024/03/29 14:43:24 by lde-cast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,16 @@ static inline void	mouse_pos(double x, double y, void *param)
 	t_game	*game;
 
 	game = param;
+	if (game->status & 1 << MOUSE_MOVE)
+	{
+		game->player->angle = 0.25 * (game->mlx->delta_time);
+		if (x < game->mouse->pos->x)
+			object_rotate(game->player, 1);
+		else
+			object_rotate(game->player, 0);
+		mlx_set_mouse_pos(game->mlx, game->size->x * 0.5,
+			game->size->y * 0.5);
+	}
 	game->mouse->pos->x = x;
 	game->mouse->pos->y = y;
 }
@@ -60,25 +70,6 @@ static inline void	mouse_press(mouse_key_t button,
 		if (button == MLX_MOUSE_BUTTON_RIGHT)
 			game->mouse->button &= ~(1 << 2);
 	}
-}
-
-int	mouse_move(t_game *game)
-{
-	int		move;
-
-	move = -1;
-	if (game->mouse->horiz != game->mouse->pos->x)
-	{
-		if (game->mouse->pos->x < 1 || game->mouse->pos->x > game->size->x - 1)
-			mlx_set_mouse_pos(game->mlx, game->size->x * 0.5,
-				game->size->y * 0.5);
-		if (game->mouse->horiz > game->mouse->pos->x)
-			move = 1;
-		else
-			move = 0;
-		game->mouse->horiz = game->mouse->pos->x;
-	}
-	return (move);
 }
 
 void	mouse_event_start(t_game *game)

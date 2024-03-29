@@ -6,7 +6,7 @@
 /*   By: lde-cast <lde-cast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 20:08:16 by mister-code       #+#    #+#             */
-/*   Updated: 2024/03/26 17:41:18 by lde-cast         ###   ########.fr       */
+/*   Updated: 2024/03/29 15:00:51 by lde-cast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	game_start(t_game *game)
 	*(game->player->dir) = vd2d_start(-1, 0);
 	*(game->player->plane) = vd2d_start(0, 0.66);
 	object_rotate(game->player, 1);
-	*(game->size) = vd2d_start(1920, 1080);
+	*(game->size) = vd2d_start(1366, 768);
 	*(game->level->cell) = cell_get(game);
 	mlx_set_setting(MLX_FULLSCREEN, true);
 	game->mlx = mlx_init(game->size->x, game->size->y, "cub3d", false);

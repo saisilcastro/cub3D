@@ -31,13 +31,7 @@ static inline void	game_clear(void *set)
 		draw_rect_fill(b, e, 1, pixel_to_int(game->level->color));
 	}
 	game->player->speed = 7.0 * (game->mlx->delta_time);
-	if (game->status & (1 << MOUSE_MOVE))
-	{
-		game->player->angle = 1.5 * (game->mlx->delta_time);
-		object_rotate(game->player, mouse_move(game));
-	}
-	else
-		game->player->angle = 2.0 * (game->mlx->delta_time);
+	game->player->angle = 2.0 * (game->mlx->delta_time);
 }
 
 static inline void	game_show(void *set)

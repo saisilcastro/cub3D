@@ -4,7 +4,7 @@ SO ./maps/texture/resident_evil_gaiden_staircase.png
 EA ./maps/texture/resident_evil_gaiden_living_room.png
 
 C 129,97,64
-F 127,17,1
+F 64,17,1
 
 11111111111111         11111111111111
 10000000000001         10000000000001

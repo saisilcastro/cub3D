@@ -66,4 +66,4 @@ fclean: clean
 	@$(MAKE) fclean -C ./libft --silent
 re: fclean all
 leak:
-	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=codam.sup ./$(NAME) maps/map1.cub
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=codam.sup ./$(NAME) maps/map.cub
